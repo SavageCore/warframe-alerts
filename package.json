@@ -1,0 +1,85 @@
+{
+	"name": "warframe-alerts",
+	"productName": "Warframe Alerts",
+	"description": "Warframe alert notifications that are filterable",
+	"version": "0.1.0",
+	"author": "SavageCore <talk@savagecore.eu>",
+	"copyright": "© 2017, SavageCore",
+	"homepage": "http://savagecore.eu",
+	"license": "MIT",
+	"main": "app/background.js",
+	"repository": "github:SavageCore/warframe-alerts",
+	"build": {
+		"appId": "eu.savagecore.warframe-alerts",
+		"files": [
+			"app/**/*",
+			"node_modules/**/*",
+			"package.json"
+		],
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "SavageCore",
+				"repo": "warframe-alerts"
+			}
+		]
+	},
+	"ava": {
+		"concurrency": 5,
+		"failFast": true,
+		"require": "babel-core/register"
+	},
+	"babel": {
+		"babelrc": false,
+		"presets": [
+			"es2015"
+		]
+	},
+	"scripts": {
+		"postinstall": "electron-builder install-app-deps",
+		"build": "gulp build",
+		"prerelease": "gulp build --env=production",
+		"package": "gulp build --env=production && build --win -p never",
+		"package-dev": "gulp build --env=development && build --win -p never",
+		"release": "gulp build --env=production && build --win -p always",
+		"start": "gulp start",
+		"start-pro": "gulp start --env=production",
+		"pretest": "gulp build --env=test",
+		"test": "xo && ava"
+	},
+	"dependencies": {
+		"@ava/babel-preset-stage-4": "^1.1.0",
+		"@sindresorhus/is": "^0.4.0",
+		"auto-launch": "^5.0.1",
+		"del": "^3.0.0",
+		"electron-log": "^2.2.9",
+		"electron-store": "^1.3.0",
+		"electron-updater": "^2.13.0",
+		"fs-jetpack": "^1.0.0",
+		"got": "^7.1.0",
+		"make-dir": "^1.0.0",
+		"materialize-css": "^0.100.2",
+		"minimist": "^1.2.0",
+		"os-locale": "^2.1.0",
+		"spectron": "^3.7.2",
+		"ucfirst": "^1.0.0",
+		"unix-timestamp": "^0.2.0",
+		"warframe-worldstate-parser": "^2.0.0"
+	},
+	"devDependencies": {
+		"ava": "^0.23.0",
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"electron": "^1.8.2-beta.1",
+		"electron-builder": "^19.16.0",
+		"gulp": "^3.9.1",
+		"gulp-batch": "^1.0.5",
+		"gulp-less": "^3.3.2",
+		"gulp-plumber": "^1.1.0",
+		"gulp-util": "^3.0.8",
+		"gulp-watch": "^4.3.11",
+		"rollup": "^0.45.2",
+		"source-map-support": "^0.4.15",
+		"xo": "^0.18.2"
+	}
+}

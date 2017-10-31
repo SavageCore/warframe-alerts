@@ -1,0 +1,36 @@
+build: off
+
+os: unstable
+
+platform:
+  - x64
+
+branches:
+  only:
+  - master
+
+skip_tags: true
+
+environment:
+  nodejs_version: "7"
+  COVERALLS_REPO_TOKEN:
+    secure: lo3HKKYhTgFZUhAwuWrNsvCK5eLR+eSUROOcK6iFUnSlIQbHW0didMhdcj/WPa+J
+  COVERALLS_SERVICE_NAME: appveyor
+
+cache:
+  - node_modules -> package.json
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm install -g npm
+  - npm install
+
+before_test:
+  - node --version
+  - npm --version
+
+test_script:
+  - npm test
+
+# after_test:
+  # - npm run coverage
