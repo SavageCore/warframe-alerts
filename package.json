@@ -41,7 +41,7 @@
 		"prerelease": "gulp build --env=production",
 		"package": "gulp build --env=production && build --win -p never",
 		"package-dev": "gulp build --env=development && build --win -p never",
-		"release": "gulp build --env=production && build --win -p always",
+		"release": "build --win -p always",
 		"start": "gulp start",
 		"start-pro": "gulp start --env=production",
 		"pretest": "gulp build --env=test",

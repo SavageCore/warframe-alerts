@@ -6,7 +6,7 @@
 
 # Tips
 
-Shift/Ctrl+click a checkbox to Select/Deselect all
+Shift/Ctrl+click the first checkbox to Select/Deselect all
 
 Double click tray icon to show window
 
