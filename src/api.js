@@ -7,7 +7,6 @@ const WorldState = require('warframe-worldstate-parser');
 const got = require('got');
 const ts = require('unix-timestamp');
 const log = require('electron-log');
-// Const del = require('del');
 
 export const planetFromNode = node => {
 	return /\w+ \(([\w\s]+)\)/.exec(node)[1];
