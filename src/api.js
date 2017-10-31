@@ -8,27 +8,27 @@ const got = require('got');
 const ts = require('unix-timestamp');
 const log = require('electron-log');
 
-export const planetFromNode = node => {
+function planetFromNode(node) {
 	return /\w+ \(([\w\s]+)\)/.exec(node)[1];
-};
+}
 
-export const endoFromString = itemString => {
+function endoFromString(itemString) {
 	return /(\d+) Endo/.exec(itemString)[1];
-};
+}
 
-export const tracesFromString = itemString => {
+function tracesFromString(itemString) {
 	return /(\d+) Void Traces/.exec(itemString)[1];
-};
+}
 
-export const resourceFromString = itemString => {
+function resourceFromString(itemString) {
 	const m = /^\d+ ([\w\s]+)$/.exec(itemString);
 	if (m) {
 		return m[1];
 	}
 	return '';
-};
+}
 
-export const cleanupAlerts = () => {
+function cleanupAlerts() {
 	const seenAlerts = store.get('seenAlerts', {});
 	for (const alert in seenAlerts) {
 		if (Object.prototype.hasOwnProperty.call(seenAlerts, alert)) {
@@ -38,9 +38,9 @@ export const cleanupAlerts = () => {
 		}
 	}
 	store.set('seenAlerts', seenAlerts);
-};
+}
 
-export const cleanupInvasions = ws => {
+function cleanupInvasions(ws) {
 	const seenInvasions = store.get('seenInvasions', {});
 	for (const invasion in seenInvasions) {
 		if (Object.prototype.hasOwnProperty.call(seenInvasions, invasion)) {
@@ -50,9 +50,9 @@ export const cleanupInvasions = ws => {
 			}
 		}
 	}
-};
+}
 
-export const matchesAlertFilter = alertObj => {
+function matchesAlertFilter(alertObj) {
 	const planets = store.get('filters.planets');
 	const credits = store.get('filters.other.credits', 0);
 	const items = store.get('filters.items');
@@ -65,11 +65,6 @@ export const matchesAlertFilter = alertObj => {
 
 	const expiryCheck = filterExpiry(alertObj.expiry);
 	if (!expiryCheck) {
-		console.log('');
-		console.log('');
-		console.log(`Item: ${alertObj.itemString}`);
-		console.log(`Item id: ${alertObj.id}`);
-		console.log(`Expiry check: ${expiryCheck}`);
 		return false;
 	}
 	const planetsCheck = filterPlanets(planets, planetFromNode(alertObj.node));
@@ -81,27 +76,13 @@ export const matchesAlertFilter = alertObj => {
 	const kubrowCheck = filterKubrow(kubrowEgg, alertObj.itemString);
 	const weaponSkinCheck = filterWeaponSkin(weaponSkin, alertObj);
 
-	// Check ok and return
-	console.log('');
-	console.log('');
-	console.log(alertObj);
-	console.log(`Item: ${alertObj.itemString}`);
-	console.log(`Planets check: ${planetsCheck}`);
-	console.log(`Items check: ${itemsCheck}`);
-	console.log(`Credits check: ${creditsCheck}`);
-	console.log(`Endo check: ${endoCheck}`);
-	console.log(`Helmets check: ${helmetsCheck}`);
-	console.log(`Traces check: ${tracesCheck}`);
-	console.log(`Kubrow check: ${kubrowCheck}`);
-	console.log(`Weapon skin check: ${weaponSkinCheck}`);
-	console.log(`Expiry check: ${expiryCheck}`);
 	if (planetsCheck && (creditsCheck || endoCheck || itemsCheck || helmetsCheck || tracesCheck || kubrowCheck || weaponSkinCheck)) {
 		return true;
 	}
 	return false;
-};
+}
 
-export const matchesInvasionFilter = async invasionObj => {
+async function matchesInvasionFilter(invasionObj) {
 	const planets = store.get('filters.planets');
 	const credits = store.get('filters.other.credits', 0);
 	const items = store.get('filters.items');
@@ -109,13 +90,6 @@ export const matchesInvasionFilter = async invasionObj => {
 
 	const completedCheck = invasionObj.completed;
 	if (completedCheck === true) {
-		console.log('');
-		console.log('');
-		console.log(`Node: ${invasionObj.node}`);
-		console.log(`Attacking item: ${invasionObj.attacking.itemString}`);
-		console.log(`Defending item: ${invasionObj.defending.itemString}`);
-		console.log(`Is completed: ${completedCheck}`);
-		console.log('Did not pass');
 		return false;
 	}
 	const planetsCheck = filterPlanets(planets, planetFromNode(invasionObj.node));
@@ -124,25 +98,11 @@ export const matchesInvasionFilter = async invasionObj => {
 	const attackingCreditsCheck = filterCredits(credits, invasionObj.attacking.credits);
 	const defendingCreditsCheck = filterCredits(credits, invasionObj.defending.credits);
 
-	// Check ok and return
-	console.log('');
-	console.log('');
-	console.log(`Node: ${invasionObj.node}`);
-	console.log(`Attacking item: ${invasionObj.attacking.itemString}`);
-	console.log(`Defending item: ${invasionObj.defending.itemString}`);
-	console.log(`Planets check: ${planetsCheck}`);
-	console.log(`Attacking items check: ${attackingItemsCheck}`);
-	console.log(`Defending items check: ${defendingItemsCheck}`);
-	console.log(`Attacking credits check: ${attackingCreditsCheck}`);
-	console.log(`Defending credits check: ${defendingCreditsCheck}`);
-	console.log(`Is completed: ${completedCheck}`);
 	if (planetsCheck && ((attackingCreditsCheck || defendingCreditsCheck) || (attackingItemsCheck || defendingItemsCheck))) {
-		console.log('Passed ok - notify');
 		return true;
 	}
-	console.log('Did not pass');
 	return false;
-};
+}
 
 export const checkAlert = async ws => {
 	ws.alerts.forEach(item => {
@@ -288,7 +248,7 @@ function filterItems(items, custom, itemString) {
 	return itemsCheck;
 }
 
-export function filterPlanets(planets, planet) {
+function filterPlanets(planets, planet) {
 	if (Object.prototype.hasOwnProperty.call(planets, planet)) {
 		if (planets[planet] === true) {
 			return true;
@@ -297,7 +257,7 @@ export function filterPlanets(planets, planet) {
 	return false;
 }
 
-export function filterCredits(configObj, credits) {
+function filterCredits(configObj, credits) {
 	if (configObj > 0) {
 		if (credits >= configObj) {
 			return true;
@@ -307,18 +267,17 @@ export function filterCredits(configObj, credits) {
 	return false;
 }
 
-export function filterEndo(endo, alertObj) {
+function filterEndo(endo, alertObj) {
 	if (alertObj.rewardTypes.includes('endo') && endo > 0) {
 		if (endoFromString(alertObj.itemString) >= endo) {
 			return true;
-			// ItemsCheck = true;
 		}
 		return false;
 	}
 	return false;
 }
 
-export function filterHelmets(helmets, alertObj) {
+function filterHelmets(helmets, alertObj) {
 	if (alertObj.rewardTypes.includes('helmet')) {
 		if (helmets) {
 			return true;
@@ -328,7 +287,7 @@ export function filterHelmets(helmets, alertObj) {
 	return false;
 }
 
-export function filterTraces(traces, alertObj) {
+function filterTraces(traces, alertObj) {
 	if (alertObj.rewardTypes.includes('traces')) {
 		if (traces > 0 && traces >= tracesFromString(alertObj.itemString)) {
 			return true;
@@ -337,7 +296,7 @@ export function filterTraces(traces, alertObj) {
 	}
 }
 
-export function filterKubrow(kubrowEgg, itemString) {
+function filterKubrow(kubrowEgg, itemString) {
 	if (itemString === 'Kubrow Egg') {
 		if (kubrowEgg) {
 			return true;
@@ -347,7 +306,7 @@ export function filterKubrow(kubrowEgg, itemString) {
 	return false;
 }
 
-export function filterWeaponSkin(weaponSkin, alertObj) {
+function filterWeaponSkin(weaponSkin, alertObj) {
 	if (alertObj.rewardTypes.includes('skin')) {
 		if (weaponSkin) {
 			return true;
@@ -357,7 +316,7 @@ export function filterWeaponSkin(weaponSkin, alertObj) {
 	return false;
 }
 
-export function filterExpiry(expiry) {
+function filterExpiry(expiry) {
 	const nowTs = ts.now() * 1000;
 	const expiryTs = ts.fromDate(expiry) * 1000;
 	if (nowTs <= expiryTs) {
@@ -366,7 +325,7 @@ export function filterExpiry(expiry) {
 	return false;
 }
 
-export function postAlertNotification(item, body, icon) {
+function postAlertNotification(item, body, icon) {
 	const alertNotification = new Notification({
 		title: 'New alert!',
 		body,
@@ -375,7 +334,7 @@ export function postAlertNotification(item, body, icon) {
 	alertNotification.show();
 }
 
-export function postInvasionNotification(item, body) {
+function postInvasionNotification(item, body) {
 	const alertNotification = new Notification({
 		title: 'New invasion!',
 		body,
