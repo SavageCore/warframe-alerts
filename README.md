@@ -1,4 +1,4 @@
-# warframe-alerts [![Build status](https://ci.appveyor.com/api/projects/status/ndkp12q9d7ypydhu?svg=true)](https://ci.appveyor.com/project/SavageCore/warframe-alerts) [![Dependency Status](https://dependencyci.com/github/SavageCore/warframe-alerts/badge)](https://dependencyci.com/github/SavageCore/warframe-alerts)
+# warframe-alerts [![Build status](https://ci.appveyor.com/api/projects/status/14pidw7jht7cn0cm?svg=true)](https://ci.appveyor.com/project/SavageCore/warframe-alerts) [![Dependency Status](https://dependencyci.com/github/SavageCore/warframe-alerts/badge)](https://dependencyci.com/github/SavageCore/warframe-alerts)
 
 ![Preview](https://i.imgur.com/gfLu35x.png)
 
