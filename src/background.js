@@ -136,7 +136,7 @@ app.on('ready', () => {
 				checked: autoStartEnabled
 			},
 			{
-				label: 'Add unmatched to log', click() {
+				label: 'Log unmatched alerts', click() {
 					store.set('app.logUnmatched', !logUnmatched);
 				},
 				type: 'checkbox',
