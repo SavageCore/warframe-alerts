@@ -54,6 +54,7 @@ ipcRenderer.on('filter-data', (event, store) => {
 document.querySelector('#menuBar').addEventListener('click', () => {
 	if (logElem.className.indexOf('active') > -1) {
 		document.querySelector('body').style = 'overflow-y: auto';
+		scrollContainer.scrollTop = logElem.scrollHeight;
 	} else {
 		document.querySelector('body').style = 'overflow-y: hidden';
 		scrollContainer.scrollTop = 0;
