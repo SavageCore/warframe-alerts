@@ -40,16 +40,16 @@ export const cleanupAlerts = () => {
 	store.set('seenAlerts', seenAlerts);
 };
 
-export const cleanupInvasions = () => {
-	// Const seenInvasions = store.get('seenInvasions', {});
-	// for (const invasion in seenInvasions) {
-	// 	if (Object.prototype.hasOwnProperty.call(seenInvasions, invasion)) {
-	// 		if (ts.now() > ts.fromDate(seenInvasions[invasion]) || isNaN(ts.fromDate(seenInvasions[invasion]))) {
-	// 			delete seenInvasions[invasion];
-	// 		}
-	// 	}
-	// }
-	// store.set('seenInvasions', seenInvasions);
+export const cleanupInvasions = ws => {
+	const seenInvasions = store.get('seenInvasions', {});
+	for (const invasion in seenInvasions) {
+		if (Object.prototype.hasOwnProperty.call(seenInvasions, invasion)) {
+			if (!hasValue(ws.invasions, 'id', invasion)) {
+				delete seenInvasions[invasion];
+				store.set('seenInvasions', seenInvasions);
+			}
+		}
+	}
 };
 
 export const matchesAlertFilter = alertObj => {
@@ -248,11 +248,11 @@ export const checkInvasion = async () => {
 					}
 				}
 			});
+			cleanupInvasions(ws);
 		})
 		.catch(err => {
 			console.log(err);
 		});
-	cleanupInvasions();
 };
 
 function filterItems(items, custom, itemString) {
@@ -382,4 +382,15 @@ export function postInvasionNotification(item, body) {
 		icon: false
 	});
 	alertNotification.show();
+}
+
+function hasValue(obj, key, value) {
+	for (const invasion in obj) {
+		if (Object.prototype.hasOwnProperty.call(obj, invasion)) {
+			if (obj[invasion][key] === value) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
