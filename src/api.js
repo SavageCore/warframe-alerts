@@ -156,9 +156,12 @@ export const checkAlert = async ws => {
 			rewardTypes: item.rewardTypes,
 			expiry: item.expiry
 		};
-		let bodyStr = `${item.mission.node} - ${item.mission.type} - ${item.eta} - ${item.mission.reward.credits}cr`;
+		const bodyStr = `${item.mission.node} - ${item.mission.type} - ${item.eta} - ${item.mission.reward.credits}cr`;
+		let bodyStrText = bodyStr;
+		let bodyStrHTML = bodyStr;
 		if (item.mission.reward.itemString) {
-			bodyStr += ` - ${item.mission.reward.itemString}`;
+			bodyStrText += ` - ${item.mission.reward.itemString}`;
+			bodyStrHTML += ` - <a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(item.mission.reward.itemString.replace(/(\d+) /, ''))}" class="js-external-link">${item.mission.reward.itemString}</a>`;
 		}
 		if (Notification.isSupported()) {
 			if (!Object.prototype.hasOwnProperty.call(seenAlerts, item.id) && matchesAlertFilter(alertObj)) {
@@ -166,29 +169,28 @@ export const checkAlert = async ws => {
 					const thumbPath = `${app.getPath('temp')}/${alertObj.itemString.replace(/(\d+) /, '').replace(/\s+/g, '_').toLowerCase()}.png`;
 					if (fs.existsSync(thumbPath)) {
 						console.log(`Using cached thumbnail: ${thumbPath}`);
-						postAlertNotification(item, bodyStr, thumbPath);
+						postAlertNotification(item, bodyStrText, thumbPath);
 					} else {
 						console.log('Downloading thumbnail');
 						const writeStream = got.stream(alertObj.thumbnail).pipe(fs.createWriteStream(thumbPath));
 						writeStream.on('close', () => {
-							postAlertNotification(item, bodyStr, thumbPath);
-							// Del(thumbPath, {force: true});
+							postAlertNotification(item, bodyStrText, thumbPath);
 						});
 					}
-					log.info(`Alert: ${bodyStr}`);
-					updateLog(`Alert: ${bodyStr}`, 'success');
+					log.info(`Alert: ${bodyStrText}`);
+					updateLog(`Alert: ${bodyStrHTML}`, 'success');
 					seenAlerts = Object.assign(seenAlerts, seenAlerts[item.id] = item.expiry);
 					store.set('seenAlerts', seenAlerts);
 				} else {
-					postAlertNotification(item, bodyStr);
-					log.info(`Alert: ${bodyStr}`);
-					updateLog(`Alert: ${bodyStr}`, 'success');
+					postAlertNotification(item, bodyStrText);
+					log.info(`Alert: ${bodyStrText}`);
+					updateLog(`Alert: ${bodyStrHTML}`, 'success');
 					seenAlerts = Object.assign(seenAlerts, seenAlerts[item.id] = item.expiry);
 					store.set('seenAlerts', seenAlerts);
 				}
 			} else if (store.get('app.logUnmatched', false) && !Object.prototype.hasOwnProperty.call(seenAlerts, item.id)) {
-				log.info(`Unmatched alert: ${bodyStr}`);
-				updateLog(`Unmatched alert: ${bodyStr}`, 'error');
+				log.info(`Unmatched alert: ${bodyStrText}`);
+				updateLog(`Unmatched alert: ${bodyStrHTML}`, 'error');
 				seenAlerts = Object.assign(seenAlerts, seenAlerts[item.id] = item.expiry);
 				store.set('seenAlerts', seenAlerts);
 			}

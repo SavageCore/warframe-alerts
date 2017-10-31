@@ -8,6 +8,10 @@ import {remote} from 'electron';
 const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
 
+const globalStore = {
+	eventTargetHref: null
+};
+
 const isAnyTextSelected = () => {
 	return window.getSelection().toString() !== '';
 };
@@ -33,6 +37,14 @@ const paste = new MenuItem({
 	}
 });
 
+const copyLink = new MenuItem({
+	label: 'Copy Link',
+	click: () => {
+		console.log(globalStore.eventTargetHref);
+		copyToClipboard(globalStore.eventTargetHref);
+	}
+});
+
 const normalMenu = new Menu();
 normalMenu.append(copy);
 
@@ -41,12 +53,20 @@ textEditingMenu.append(cut);
 textEditingMenu.append(copy);
 textEditingMenu.append(paste);
 
+const linkMenu = new Menu();
+linkMenu.append(copyLink);
+
 document.addEventListener('contextmenu', event => {
 	switch (event.target.nodeName) {
 		case 'TEXTAREA':
 		case 'INPUT':
 			event.preventDefault();
 			textEditingMenu.popup(remote.getCurrentWindow());
+			break;
+		case 'A':
+			event.preventDefault();
+			globalStore.eventTargetHref = event.target.href;
+			linkMenu.popup(remote.getCurrentWindow());
 			break;
 		default:
 			if (isAnyTextSelected()) {
@@ -55,3 +75,18 @@ document.addEventListener('contextmenu', event => {
 			}
 	}
 }, false);
+
+function copyToClipboard(text) {
+	const textArea = document.createElement('textarea');
+	textArea.textContent = text;
+	document.body.appendChild(textArea);
+	textArea.select();
+	try {
+		return document.execCommand('copy');
+	} catch (err) {
+		console.warn('Copy to clipboard failed.', err);
+		return false;
+	} finally {
+		document.body.removeChild(textArea);
+	}
+}
