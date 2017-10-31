@@ -328,12 +328,11 @@ export function filterHelmets(helmets, alertObj) {
 
 export function filterTraces(traces, alertObj) {
 	if (alertObj.rewardTypes.includes('traces')) {
-		if (tracesFromString(alertObj.itemString) >= traces || traces === 0) {
+		if (traces > 0 && traces >= tracesFromString(alertObj.itemString)) {
 			return true;
 		}
 		return false;
 	}
-	return false;
 }
 
 export function filterKubrow(kubrowEgg, itemString) {
