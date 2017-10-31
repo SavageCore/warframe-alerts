@@ -58,6 +58,19 @@ const updateLog = (msg, status) => {
 let interval;
 let slowInterval;
 
+const shouldQuit = app.makeSingleInstance(() => {
+	if (mainWindow) {
+		if (!mainWindow.isVisible()) {
+			mainWindow.show();
+		}
+		mainWindow.focus();
+	}
+});
+
+if (shouldQuit) {
+	app.quit();
+}
+
 app.on('ready', () => {
 	mainWindow = createWindow('main', {
 		width: 1000,
