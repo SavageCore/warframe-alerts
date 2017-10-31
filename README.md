@@ -2,7 +2,7 @@
 
 ![Preview](https://i.imgur.com/gfLu35x.png)
 
-![Notification](https://i.imgur.com/ZstLoJq.png)
+![Notification](https://i.imgur.com/kfyePEY.png)
 
 # Tips
 
