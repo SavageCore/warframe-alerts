@@ -2,7 +2,6 @@
 /* eslint-disable import/no-unassigned-import */
 
 import {ipcRenderer} from 'electron';
-import './helpers/context-menu';
 import './helpers/external-links';
 
 window.jQuery = require('../node_modules/jquery/dist/jquery.js');

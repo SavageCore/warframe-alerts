@@ -21,6 +21,8 @@ const unhandled = require('electron-unhandled');
 
 unhandled();
 
+require('electron-context-menu')();
+
 const appAutoLauncher = new AutoLaunch({
 	name: app.getName(),
 	isHidden: true
