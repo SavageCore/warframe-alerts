@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Image files
+*.icns binary
+*.png binary
+*.ico binary
