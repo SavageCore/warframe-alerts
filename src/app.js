@@ -15,6 +15,9 @@ const logElem = document.querySelector('#log');
 const scrollContainer = document.querySelector('.container');
 const is = require('@sindresorhus/is');
 const ucfirst = require('ucfirst');
+const unhandled = require('electron-unhandled');
+
+unhandled();
 
 let autoScroll = true;
 

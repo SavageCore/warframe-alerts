@@ -17,6 +17,9 @@ const AutoLaunch = require('auto-launch');
 const osLocale = require('os-locale');
 const ts = require('unix-timestamp');
 const WorldState = require('warframe-worldstate-parser');
+const unhandled = require('electron-unhandled');
+
+unhandled();
 
 const appAutoLauncher = new AutoLaunch({
 	name: app.getName(),

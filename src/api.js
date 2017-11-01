@@ -7,6 +7,9 @@ const WorldState = require('warframe-worldstate-parser');
 const got = require('got');
 const ts = require('unix-timestamp');
 const log = require('electron-log');
+const unhandled = require('electron-unhandled');
+
+unhandled();
 
 function planetFromNode(node) {
 	return /\w+ \(([\w\s]+)\)/.exec(node)[1];
@@ -222,7 +225,6 @@ function filterItems(items, custom, itemString) {
 			if (itemType === 'blueprints') {
 				itemString = itemString.replace(' Blueprint', '');
 			}
-			console.log(`check: ${items[itemType][itemString]}`);
 			if (items[itemType][itemString] === true) {
 				itemsCheck = true;
 				return itemsCheck;
