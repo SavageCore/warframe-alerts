@@ -98,7 +98,7 @@ app.on('ready', () => {
 
 	if (env.name === 'development') {
 		setApplicationMenu();
-		mainWindow.openDevTools();
+		mainWindow.openDevTools({mode: 'undocked'});
 	} else {
 		mainWindow.setMenu(null);
 	}
