@@ -74,6 +74,7 @@
 		"devtron": "^1.4.0",
 		"electron": "^1.8.2-beta.1",
 		"electron-builder": "^19.16.0",
+		"electron-process-manager": "^0.1.0",
 		"gulp": "^3.9.1",
 		"gulp-batch": "^1.0.5",
 		"gulp-less": "^3.3.2",

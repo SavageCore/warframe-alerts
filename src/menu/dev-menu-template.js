@@ -1,4 +1,5 @@
 import {app, BrowserWindow} from 'electron';
+import {openProcessManager} from 'electron-process-manager';
 
 const devMenuTemplate = {
 	label: 'Development',
@@ -14,6 +15,13 @@ const devMenuTemplate = {
 		accelerator: 'Alt+CmdOrCtrl+I',
 		click: () => {
 			BrowserWindow.getFocusedWindow().toggleDevTools();
+		}
+	},
+	{
+		label: 'Processes',
+		accelerator: 'CmdOrCtrl+P',
+		click: () => {
+			openProcessManager();
 		}
 	},
 	{
