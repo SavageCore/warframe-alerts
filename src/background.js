@@ -186,7 +186,6 @@ app.on('ready', () => {
 		tray.setContextMenu(contextMenu);
 		ipcMain.on('update-filter', async (event, arg) => {
 			store.set(`${arg.config}.${arg.item}`, arg.value);
-			checkApi();
 		});
 	}).catch(err => {
 		log.error(err);
