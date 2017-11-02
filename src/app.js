@@ -74,11 +74,15 @@ function populatePage(page, settings, configNode) {
 	for (const item in settings) {
 		if (Object.prototype.hasOwnProperty.call(settings, item)) {
 			let checked = '';
+			let title = '';
 			if (is.boolean(settings[item])) {
 				if (is.truthy(settings[item])) {
 					checked = ' checked ';
 				}
-				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '">' + ucfirst(item) + '</label></p>';
+				if (i === 0) {
+					title = ' title="Shift click to Select/Deselect All"';
+				}
+				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '"' + title + '>' + ucfirst(item) + '</label></p>';
 			} else if (is.string(settings[item])) {
 				HTML += '<p><input placeholder="Comma seperated list of exact item names" id="' + item + '" data-config-node="' + configNode + '" type="text" value="' + settings[item] + '"><label for="' + item + '">' + ucfirst(item) + '</label></p>';
 			} else if (is.number(settings[item])) {
@@ -118,7 +122,7 @@ function populateOtherPage(settings, configNode) {
 	if (is.truthy(settings.kubrowEgg)) {
 		kubrowEggChecked = ' checked ';
 	}
-	HTML += '<p><input type="checkbox" id="helmets" class="filled-in"' + helmetsChecked + 'data-config-node="' + configNode + '"/><label for="helmets">Helmets</label></p>';
+	HTML += '<p><input type="checkbox" id="helmets" class="filled-in"' + helmetsChecked + 'data-config-node="' + configNode + '"/><label for="helmets" title="Shift click to Select/Deselect All">Helmets</label></p>';
 	HTML += '<p><input type="checkbox" id="weaponSkins" class="filled-in"' + weaponSkinsChecked + 'data-config-node="' + configNode + '"/><label for="weaponSkins">Weapon Skins</label></p>';
 	HTML += '<p><input type="checkbox" id="kubrowEgg" class="filled-in"' + kubrowEggChecked + 'data-config-node="' + configNode + '"/><label for="kubrowEgg">Kubrow Eggs</label></p>';
 	HTML += '<p>At least: </p>';
