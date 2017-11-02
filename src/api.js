@@ -131,10 +131,8 @@ export const checkAlert = async ws => {
 				if (alertObj.thumbnail) {
 					const thumbPath = `${app.getPath('temp')}/${alertObj.itemString.replace(/(\d+) /, '').replace(/\s+/g, '_').toLowerCase()}.png`;
 					if (fs.existsSync(thumbPath)) {
-						console.log(`Using cached thumbnail: ${thumbPath}`);
 						postAlertNotification(item, bodyStrText, thumbPath);
 					} else {
-						console.log('Downloading thumbnail');
 						const writeStream = got.stream(alertObj.thumbnail).pipe(fs.createWriteStream(thumbPath));
 						writeStream.on('close', () => {
 							postAlertNotification(item, bodyStrText, thumbPath);

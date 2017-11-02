@@ -185,8 +185,6 @@ app.on('ready', () => {
 		tray.setToolTip(app.getName());
 		tray.setContextMenu(contextMenu);
 		ipcMain.on('update-filter', async (event, arg) => {
-			console.log(arg);
-			console.log(`${arg.config}.${arg.item}`);
 			store.set(`${arg.config}.${arg.item}`, arg.value);
 			checkApi();
 		});
