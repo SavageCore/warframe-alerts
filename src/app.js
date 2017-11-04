@@ -36,7 +36,7 @@ ipcRenderer.on('log-data', (event, msg, status) => {
 	}
 });
 
-ipcRenderer.on('filter-data', (event, store) => {
+ipcRenderer.on('filter-data', (event, settings, defaults) => {
 	const pages = document.querySelectorAll('.tabs .tab');
 	let page;
 	for (let i = 0; i < pages.length; i++) {
@@ -44,11 +44,11 @@ ipcRenderer.on('filter-data', (event, store) => {
 		if (page === 'log') {
 			continue;
 		} else if (page === 'planets') {
-			populatePage(page, store.planets, 'filters.planets');
+			populatePage(page, settings.planets, 'filters.planets', defaults.planets);
 		} else if (page === 'other') {
-			populateOtherPage(store.other, 'filters.other');
+			populateOtherPage(settings.other, 'filters.other', defaults.other);
 		} else {
-			populatePage(page, store.items[page], 'filters.items.' + page);
+			populatePage(page, settings.items[page], 'filters.items.' + page, defaults.items[page]);
 		}
 	}
 });
@@ -64,18 +64,18 @@ document.querySelector('#menuBar').addEventListener('click', () => {
 	autoScroll = false;
 }, false);
 
-function populatePage(page, settings, configNode) {
+function populatePage(page, settings, configNode, defaults) {
 	const selector = '#' + page;
 	const elem = document.querySelector(selector);
 	let HTML = '<form action="#" id="' + page + '">\n';
 	HTML += '<div class="row">';
 	HTML += '<div class="col s4">';
 	let i = 0;
-	for (const item in settings) {
-		if (Object.prototype.hasOwnProperty.call(settings, item)) {
+	for (const item in defaults) {
+		if (Object.prototype.hasOwnProperty.call(defaults, item)) {
 			let checked = '';
 			let title = '';
-			if (is.boolean(settings[item])) {
+			if (is.boolean(settings[item]) || is.boolean(defaults[item])) {
 				if (is.truthy(settings[item])) {
 					checked = ' checked ';
 				}
@@ -83,10 +83,6 @@ function populatePage(page, settings, configNode) {
 					title = ' title="Shift click to Select/Deselect All"';
 				}
 				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '"' + title + '>' + ucfirst(item) + '</label></p>';
-			} else if (is.string(settings[item])) {
-				HTML += '<p><input placeholder="Comma seperated list of exact item names" id="' + item + '" data-config-node="' + configNode + '" type="text" value="' + settings[item] + '"><label for="' + item + '">' + ucfirst(item) + '</label></p>';
-			} else if (is.number(settings[item])) {
-				HTML += '<p><input id="' + item + '" data-config-node="' + configNode + '" type="number" value="' + settings[item] + '"><label for="' + item + '">At least X ' + ucfirst(item) + '</label>';
 			}
 			// New column after 12 lines
 			if ((++i % 12) === 0 && i !== 0) {
@@ -131,7 +127,6 @@ function populateOtherPage(settings, configNode) {
 	HTML += '<p><input type="number" id="traces" data-config-node="' + configNode + '" value="' + tracesValue + '"/><label for="traces">Traces</label></p>';
 	HTML += '</div><div class="col s9">';
 	HTML += '<p>Comma seperated list of exact item names: </p>';
-	// HTML += '<p><input type="text" id="custom" data-config-node="' + configNode + '" value="' + customValue + '"/><label for="custom">Custom</label></p>';
 	HTML += '<textarea id="custom" class="materialize-textarea" data-config-node="' + configNode + '"/>' + customValue + '</textarea><label for="custom">Custom</label></p>';
 	HTML += '</div>';
 	HTML += '</div>';

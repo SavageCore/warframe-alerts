@@ -7,6 +7,7 @@ import devMenuTemplate from './menu/dev-menu-template';
 import createWindow from './helpers/window';
 import {checkAlert, checkInvasion} from './api';
 import store from './helpers/config';
+import defaultConfig from './config';
 
 import env from './env';
 
@@ -112,7 +113,7 @@ app.on('ready', () => {
 
 	mainWindow.webContents.on('did-finish-load', async () => {
 		updateLog(`Warframe Alerts v${app.getVersion()} Started`);
-		mainWindow.webContents.send('filter-data', store.get('filters'));
+		mainWindow.webContents.send('filter-data', store.get('filters'), defaultConfig.filters);
 		checkApi();
 		setInterval(async () => {
 			checkApi();
