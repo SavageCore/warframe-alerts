@@ -83,6 +83,7 @@ const defaultConfig = {
 				'Hammer Shot': false,
 				'Ice Storm': false,
 				'Lethal Torrent': false,
+				'Lotus Rifle Random Mod Rare': false,
 				'Rending Strike': false,
 				'Seeking Fury': false,
 				Shred: false,
