@@ -74,15 +74,11 @@ function populatePage(page, settings, configNode, defaults) {
 	for (const item in defaults) {
 		if (Object.prototype.hasOwnProperty.call(defaults, item)) {
 			let checked = '';
-			let title = '';
 			if (is.boolean(settings[item]) || is.boolean(defaults[item])) {
 				if (is.truthy(settings[item])) {
 					checked = ' checked ';
 				}
-				if (i === 0) {
-					title = ' title="Shift click to Select/Deselect All"';
-				}
-				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '"' + title + '>' + ucfirst(item) + '</label></p>';
+				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '" title="Shift click to Select/Deselect All">' + ucfirst(item) + '</label></p>';
 			}
 			// New column after 12 lines
 			if ((++i % 12) === 0 && i !== 0) {
@@ -136,9 +132,9 @@ function populateOtherPage(settings, configNode) {
 }
 
 function bindEvents(page) {
-	const checkboxes = document.querySelector(`form#${page} input[type=checkbox]`);
-	if (checkboxes) {
-		checkboxes.addEventListener('click', checkAll, false);
+	const checkboxes = document.querySelectorAll(`form#${page} input[type=checkbox]`);
+	for (let i = 0; i < checkboxes.length; i++) {
+		checkboxes[i].addEventListener('click', checkAll, false);
 	}
 	const body = document.querySelector(`form#${page}`);
 	if (body) {
@@ -152,10 +148,9 @@ function checkAll(evt) {
 	if (evt.shiftKey || evt.ctrlKey) {
 		const formElems = document.querySelectorAll(`#${evt.target.form.id} input[type=checkbox]`);
 		for (let i = 0; i < formElems.length; i++) {
-			formElems[i].checked = !evt.target.checked;
+			formElems[i].checked = evt.target.checked;
 			updateFilter(formElems[i]);
 		}
-		evt.target.checked = !evt.target.checked;
 	}
 }
 
