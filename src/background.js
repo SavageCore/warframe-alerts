@@ -62,9 +62,6 @@ const updateLog = (msg, status) => {
 	mainWindow.webContents.send('log-data', logLine, status);
 };
 
-let interval;
-let slowInterval;
-
 const shouldQuit = app.makeSingleInstance(() => {
 	if (mainWindow) {
 		if (!mainWindow.isVisible()) {
@@ -195,8 +192,6 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', () => {
-	clearInterval(interval);
-	clearInterval(slowInterval);
 	app.quit();
 });
 
