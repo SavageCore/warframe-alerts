@@ -38,6 +38,7 @@ if (env.name !== 'production') {
 
 makeDir.sync(app.getPath('userData'));
 log.transports.file.file = app.getPath('userData') + '/log.log';
+log.transports.file.maxSize = 25000;
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'debug';
 log.info('App starting...');
