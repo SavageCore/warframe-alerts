@@ -1,12 +1,14 @@
-// This helper remembers the size and position of your windows (and restores
-// them in that place after app relaunch).
-// Can be used for more than one window, just construct many
-// instances of it and give each different name.
-
+import {app} from 'electron';
 import defaultConfig from '../config';
+import env from '../env';
 
 const Store = require('electron-store');
 
-const store = new Store({defaults: defaultConfig});
+let store; // eslint-disable-line import/no-mutable-exports
+if (env.name === 'production') {
+	store = new Store({defaults: defaultConfig});
+} else {
+	store = new Store({defaults: defaultConfig, cwd: `${app.getPath('userData')} (${env.name})`});
+}
 
 export default store;
