@@ -1,6 +1,10 @@
+@success: #26a69a;
+@error: #ef5350;
+@light-grey: #9e9e9e;
+
 body {
   background-color: #1b1e23;
-  color: #9e9e9e;
+  color: @light-grey;
 }
 
 .container {
@@ -27,7 +31,7 @@ nav {
 }
 
 .tabs .indicator {
-  background-color: #9e9e9e;
+  background-color: @light-grey;
 }
 
 .nav-wrapper {
@@ -47,12 +51,12 @@ nav {
 }
 
 .tabs .tab a {
-  color: #9e9e9e;
+  color: @light-grey;
 }
 
 .tabs .tab a.active,
 .tabs .tab a:hover {
-  color: #26a69a;
+  color: @success;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -64,16 +68,20 @@ nav {
 }
 
 #log .error {
-  color: #ef5350;
+  color: @error;
 }
 
 #log .success {
-  color: #26a69a;
+  color: @success;
 }
 
 #log p {
   margin: 2px 0;
   line-height: normal;
+}
+
+#log a {
+  color: @light-grey;
 }
 
 ::-webkit-scrollbar {
@@ -105,5 +113,10 @@ nav {
 }
 
 a {
+  color: @success;
+}
+
+a:hover,
+#log a:hover {
   color: #ffa726;
 }
