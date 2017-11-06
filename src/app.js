@@ -78,7 +78,7 @@ function populatePage(page, settings, configNode, defaults) {
 				if (is.truthy(settings[item])) {
 					checked = ' checked ';
 				}
-				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '" title="Shift click to Select/Deselect All">' + ucfirst(item) + '</label></p>';
+				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '" title="Shift click to Select/Deselect All"><a href="http://warframe.wikia.com/wiki/Special:Search?query=' + encodeURIComponent(item.replace(/(\d+) /, '')) + '" class="js-external-link" title="Open Warframe Wiki">' + ucfirst(item) + '</a></label></p>';
 			}
 			// New column after 12 lines
 			if ((++i % 12) === 0 && i !== 0) {
