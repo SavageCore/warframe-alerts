@@ -124,7 +124,7 @@ export const checkAlert = async ws => {
 		let bodyStrHTML = bodyStr;
 		if (item.mission.reward.itemString) {
 			bodyStrText += ` - ${item.mission.reward.itemString}`;
-			bodyStrHTML += ` - <a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(item.mission.reward.itemString.replace(/(\d+) /, ''))}" class="js-external-link">${item.mission.reward.itemString}</a>`;
+			bodyStrHTML += ` - <a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(item.mission.reward.itemString.replace(/(\d+) /, ''))}" class="js-external-link" title="Open Warframe Wiki">${item.mission.reward.itemString}</a>`;
 		}
 		if (Notification.isSupported()) {
 			if (!Object.prototype.hasOwnProperty.call(seenAlerts, item.id) && matchesAlertFilter(alertObj)) {
