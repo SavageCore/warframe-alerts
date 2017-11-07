@@ -289,7 +289,7 @@ function filterHelmets(helmets, alertObj) {
 
 function filterTraces(traces, alertObj) {
 	if (alertObj.rewardTypes.includes('traces')) {
-		if (traces > 0 && traces >= tracesFromString(alertObj.itemString)) {
+		if (traces > 0 && tracesFromString(alertObj.itemString) >= traces) {
 			return true;
 		}
 		return false;
