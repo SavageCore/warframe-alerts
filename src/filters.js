@@ -124,7 +124,11 @@ export function weaponSkins(weaponSkin, alertObj) {
 	return false;
 }
 
+// Returns false if expired
 export function expiry(expiry) {
+	if (!expiry) {
+		return false;
+	}
 	const nowTs = ts.now() * 1000;
 	const expiryTs = ts.fromDate(expiry) * 1000;
 	if (nowTs <= expiryTs) {
