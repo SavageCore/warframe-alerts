@@ -10,13 +10,20 @@ window.$ = window.jQuery;
 window.Hammer = require('../node_modules/materialize-css/js/hammer.min.js');
 require('materialize-css');
 
+const log = require('electron-log');
+
 const logElem = document.querySelector('#log');
 const scrollContainer = document.querySelector('.container');
 const is = require('@sindresorhus/is');
 const ucfirst = require('ucfirst');
 const unhandled = require('electron-unhandled');
 
-unhandled();
+unhandled({
+	logger: err => {
+		log.error(err);
+	},
+	showDialog: true
+});
 
 let autoScroll = true;
 

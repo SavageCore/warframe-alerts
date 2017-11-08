@@ -20,7 +20,12 @@ const ts = require('unix-timestamp');
 const WorldState = require('warframe-worldstate-parser');
 const unhandled = require('electron-unhandled');
 
-unhandled();
+unhandled({
+	logger: err => {
+		log.error(err);
+	},
+	showDialog: true
+});
 
 require('electron-context-menu')();
 

@@ -9,7 +9,12 @@ const ts = require('unix-timestamp');
 const log = require('electron-log');
 const unhandled = require('electron-unhandled');
 
-unhandled();
+unhandled({
+	logger: err => {
+		log.error(err);
+	},
+	showDialog: true
+});
 
 function planetFromNode(node) {
 	return /\w+ \(([\w\s]+)\)/.exec(node)[1];
