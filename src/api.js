@@ -2,6 +2,7 @@ import fs from 'fs';
 import {app, Notification} from 'electron';
 import store from './helpers/config';
 import updateLog from './background';
+import * as filters from './filters';
 
 const WorldState = require('warframe-worldstate-parser');
 const got = require('got');
@@ -15,26 +16,6 @@ unhandled({
 	},
 	showDialog: true
 });
-
-function planetFromNode(node) {
-	return /\w+ \(([\w\s]+)\)/.exec(node)[1];
-}
-
-function endoFromString(itemString) {
-	return /(\d+) Endo/.exec(itemString)[1];
-}
-
-function tracesFromString(itemString) {
-	return /(\d+) Void Traces/.exec(itemString)[1];
-}
-
-function resourceFromString(itemString) {
-	const m = /^\d+ ([\w\s]+)$/.exec(itemString);
-	if (m) {
-		return m[1];
-	}
-	return '';
-}
 
 function cleanupAlerts() {
 	const seenAlerts = store.get('seenAlerts', {});
@@ -71,20 +52,21 @@ function matchesAlertFilter(alertObj) {
 	const kubrowEgg = store.get('filters.other.kubrowEgg');
 	const weaponSkin = store.get('filters.other.weaponSkins');
 
-	const expiryCheck = filterExpiry(alertObj.expiry);
+	const expiryCheck = filters.expiry(alertObj.expiry);
 	if (!expiryCheck) {
 		return false;
 	}
-	const planetsCheck = filterPlanets(planets, planetFromNode(alertObj.node));
-	const itemsCheck = filterItems(items, custom, alertObj.itemString);
-	const creditsCheck = filterCredits(credits, alertObj.credits);
-	const endoCheck = filterEndo(endo, alertObj);
-	const helmetsCheck = filterHelmets(helmets, alertObj);
-	const tracesCheck = filterTraces(traces, alertObj);
-	const kubrowCheck = filterKubrow(kubrowEgg, alertObj.itemString);
-	const weaponSkinCheck = filterWeaponSkin(weaponSkin, alertObj);
+	const planetsCheck = filters.planets(planets, filters.planetFromNode(alertObj.node));
+	const itemsCheck = filters.items(items, alertObj.itemString);
+	const customItemsCheck = filters.customItems(custom, alertObj.itemString);
+	const creditsCheck = filters.credits(credits, alertObj.credits);
+	const endoCheck = filters.endo(endo, alertObj);
+	const helmetsCheck = filters.helmets(helmets, alertObj);
+	const tracesCheck = filters.traces(traces, alertObj);
+	const kubrowCheck = filters.kubrow(kubrowEgg, alertObj.itemString);
+	const weaponSkinCheck = filters.weaponSkins(weaponSkin, alertObj);
 
-	if (planetsCheck && (creditsCheck || endoCheck || itemsCheck || helmetsCheck || tracesCheck || kubrowCheck || weaponSkinCheck)) {
+	if (planetsCheck && (creditsCheck || endoCheck || itemsCheck || customItemsCheck || helmetsCheck || tracesCheck || kubrowCheck || weaponSkinCheck)) {
 		return true;
 	}
 	return false;
@@ -100,13 +82,15 @@ async function matchesInvasionFilter(invasionObj) {
 	if (completedCheck === true) {
 		return false;
 	}
-	const planetsCheck = filterPlanets(planets, planetFromNode(invasionObj.node));
-	const attackingItemsCheck = filterItems(items, custom, invasionObj.attacking.itemString);
-	const defendingItemsCheck = filterItems(items, custom, invasionObj.defending.itemString);
-	const attackingCreditsCheck = filterCredits(credits, invasionObj.attacking.credits);
-	const defendingCreditsCheck = filterCredits(credits, invasionObj.defending.credits);
+	const planetsCheck = filters.planets(planets, filters.planetFromNode(invasionObj.node));
+	const attackingItemsCheck = filters.items(items, invasionObj.attacking.itemString);
+	const defendingItemsCheck = filters.items(items, invasionObj.defending.itemString);
+	const attackingCustomItemsCheck = filters.customItems(custom, invasionObj.attacking.itemString);
+	const defendingCustomItemsCheck = filters.customItems(custom, invasionObj.defending.itemString);
+	const attackingCreditsCheck = filters.credits(credits, invasionObj.attacking.credits);
+	const defendingCreditsCheck = filters.credits(credits, invasionObj.defending.credits);
 
-	if (planetsCheck && ((attackingCreditsCheck || defendingCreditsCheck) || (attackingItemsCheck || defendingItemsCheck))) {
+	if (planetsCheck && ((attackingCreditsCheck || defendingCreditsCheck) || (attackingCustomItemsCheck || defendingCustomItemsCheck) || (attackingItemsCheck || defendingItemsCheck))) {
 		return true;
 	}
 	return false;
@@ -220,115 +204,6 @@ export const checkInvasion = async () => {
 			console.log(err);
 		});
 };
-
-function filterItems(items, custom, itemString) {
-	let itemsCheck = false;
-	for (const itemType in items) {
-		if (Object.prototype.hasOwnProperty.call(items, itemType)) {
-			if (itemType === 'blueprints') {
-				itemString = itemString.replace(' Blueprint', '');
-			}
-			if (items[itemType][itemString] === true) {
-				itemsCheck = true;
-				return itemsCheck;
-			} else if (items[itemType][resourceFromString(itemString)] === true) {
-				itemsCheck = true;
-				return itemsCheck;
-			}
-		}
-	}
-  // Custom item check
-	if (custom) {
-		const customItems = custom.split(',');
-		for (let i = 0; i < customItems.length; i++) {
-			if (customItems[i].trim() === itemString && itemString !== '') {
-				itemsCheck = true;
-				if (i >= customItems.length) {
-					break;
-				}
-			}
-		}
-		return itemsCheck;
-	}
-	return itemsCheck;
-}
-
-function filterPlanets(planets, planet) {
-	if (Object.prototype.hasOwnProperty.call(planets, planet)) {
-		if (planets[planet] === true) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function filterCredits(configObj, credits) {
-	if (configObj > 0) {
-		if (credits >= configObj) {
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
-function filterEndo(endo, alertObj) {
-	if (alertObj.rewardTypes.includes('endo') && endo > 0) {
-		if (endoFromString(alertObj.itemString) >= endo) {
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
-function filterHelmets(helmets, alertObj) {
-	if (alertObj.rewardTypes.includes('helmet')) {
-		if (helmets) {
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
-function filterTraces(traces, alertObj) {
-	if (alertObj.rewardTypes.includes('traces')) {
-		if (traces > 0 && tracesFromString(alertObj.itemString) >= traces) {
-			return true;
-		}
-		return false;
-	}
-}
-
-function filterKubrow(kubrowEgg, itemString) {
-	if (itemString === 'Kubrow Egg') {
-		if (kubrowEgg) {
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
-function filterWeaponSkin(weaponSkin, alertObj) {
-	if (alertObj.rewardTypes.includes('skin')) {
-		if (weaponSkin) {
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
-function filterExpiry(expiry) {
-	const nowTs = ts.now() * 1000;
-	const expiryTs = ts.fromDate(expiry) * 1000;
-	if (nowTs <= expiryTs) {
-		return true;
-	}
-	return false;
-}
 
 function postAlertNotification(item, body, icon) {
 	const alertNotification = new Notification({
