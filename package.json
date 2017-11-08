@@ -45,7 +45,7 @@
 		"start": "gulp start",
 		"start-pro": "gulp start --env=production",
 		"pretest": "gulp build --env=test",
-		"test": "xo && ava"
+		"test": "xo && nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf"
 	},
 	"dependencies": {
 		"@ava/babel-preset-stage-4": "^1.1.0",
@@ -72,6 +72,7 @@
 		"ava": "^0.23.0",
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
+		"codecov": "^3.0.0",
 		"devtron": "^1.4.0",
 		"electron": "^1.8.2-beta.1",
 		"electron-builder": "^19.16.0",
@@ -81,6 +82,7 @@
 		"gulp-plumber": "^1.1.0",
 		"gulp-util": "^3.0.8",
 		"gulp-watch": "^4.3.11",
+		"nyc": "^11.3.0",
 		"rollup": "^0.45.2",
 		"source-map-support": "^0.4.15",
 		"xo": "^0.18.2"
