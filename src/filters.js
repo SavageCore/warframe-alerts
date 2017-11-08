@@ -92,7 +92,6 @@ export function helmets(helmets, alertObj) {
 		}
 		return false;
 	}
-	return false;
 }
 
 export function traces(traces, alertObj) {
@@ -111,7 +110,6 @@ export function kubrow(kubrowEgg, itemString) {
 		}
 		return false;
 	}
-	return false;
 }
 
 export function weaponSkins(weaponSkin, alertObj) {
@@ -121,7 +119,6 @@ export function weaponSkins(weaponSkin, alertObj) {
 		}
 		return false;
 	}
-	return false;
 }
 
 // Returns false if expired
