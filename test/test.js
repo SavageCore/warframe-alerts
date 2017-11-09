@@ -9,19 +9,18 @@ const ts = require('unix-timestamp');
 const electron = path.resolve(__dirname, '../node_modules/electron/dist/electron.exe');
 
 test('App loading', async t => {
-	t.context.app = new Application({
+	const app = new Application({
 		path: electron,
 		args: ['.'],
 		startTimeout: 10000,
 		waitTimeout: 10000
 	});
-	await t.context.app.start();
-	const app = t.context.app;
+	await app.start();
 	await app.client.waitUntilWindowLoaded();
 	t.is(await app.client.getWindowCount(), 1);
 	t.regex(await app.client.getText('#log'), /Warframe Alerts v\d+.\d+.\d+ Started/);
 	if (app && app.isRunning()) {
-		await t.context.app.stop();
+		await app.stop();
 	}
 });
 
