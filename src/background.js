@@ -19,6 +19,7 @@ const osLocale = require('os-locale');
 const ts = require('unix-timestamp');
 const WorldState = require('warframe-worldstate-parser');
 const unhandled = require('electron-unhandled');
+const isOnline = require('is-online');
 
 unhandled({
 	logger: err => {
@@ -80,7 +81,7 @@ if (shouldQuit) {
 	app.exit();
 }
 
-app.on('ready', () => {
+app.on('ready', async () => {
 	mainWindow = createWindow('main', {
 		width: 1000,
 		height: 600,
@@ -107,93 +108,103 @@ app.on('ready', () => {
 		mainWindow.setMenu(null);
 	}
 
-	updateCheck();
-	setInterval(() => {
+	const online = await isOnline();
+	if (online) {
 		updateCheck();
-	}, 86400000);
+		setInterval(() => {
+			updateCheck();
+		}, 86400000);
 
-	const tray = new Tray(path.join(__dirname, '/icon.ico'));
+		const tray = new Tray(path.join(__dirname, '/icon.ico'));
 
-	mainWindow.webContents.on('did-finish-load', async () => {
-		updateLog(`Warframe Alerts v${app.getVersion()} Started`);
-		mainWindow.webContents.send('filter-data', store.get('filters'), defaultConfig.filters);
-		checkApi();
-		setInterval(async () => {
+		mainWindow.webContents.on('did-finish-load', async () => {
+			updateLog(`Warframe Alerts v${app.getVersion()} Started`);
+			mainWindow.webContents.send('filter-data', store.get('filters'), defaultConfig.filters);
 			checkApi();
-		}, 60000);
-	});
+			setInterval(async () => {
+				checkApi();
+			}, 60000);
+		});
 
-	let autoStartEnabled;
+		let autoStartEnabled;
 
-	appAutoLauncher.isEnabled().then(isEnabled => {
-		if (isEnabled) {
-			autoStartEnabled = true;
-		} else {
-			autoStartEnabled = false;
-		}
+		appAutoLauncher.isEnabled().then(isEnabled => {
+			if (isEnabled) {
+				autoStartEnabled = true;
+			} else {
+				autoStartEnabled = false;
+			}
 
-		const logUnmatched = store.get('app.logUnmatched', 'false');
-		const contextMenu = Menu.buildFromTemplate([
-			{
-				label: `Warframe Alerts v${app.getVersion()}`,
-				enabled: false
-			},
-			{
-				label: 'Show', click() {
-					mainWindow.show();
-				}
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Start with Windows', click() {
-					if (autoStartEnabled === true) {
-						appAutoLauncher.disable();
-					} else {
-						appAutoLauncher.enable();
+			const logUnmatched = store.get('app.logUnmatched', 'false');
+			const contextMenu = Menu.buildFromTemplate([
+				{
+					label: `Warframe Alerts v${app.getVersion()}`,
+					enabled: false
+				},
+				{
+					label: 'Show', click() {
+						mainWindow.show();
 					}
 				},
-				type: 'checkbox',
-				checked: autoStartEnabled
-			},
-			{
-				label: 'Log unmatched alerts', click() {
-					store.set('app.logUnmatched', !logUnmatched);
+				{
+					type: 'separator'
 				},
-				type: 'checkbox',
-				checked: logUnmatched
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Quit', click() {
-					app.isQuiting = true;
-					app.quit();
-					log.info('App quit');
+				{
+					label: 'Start with Windows', click() {
+						if (autoStartEnabled === true) {
+							appAutoLauncher.disable();
+						} else {
+							appAutoLauncher.enable();
+						}
+					},
+					type: 'checkbox',
+					checked: autoStartEnabled
+				},
+				{
+					label: 'Log unmatched alerts', click() {
+						store.set('app.logUnmatched', !logUnmatched);
+					},
+					type: 'checkbox',
+					checked: logUnmatched
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Quit', click() {
+						app.isQuiting = true;
+						app.quit();
+						log.info('App quit');
+					}
 				}
-			}
-		]);
+			]);
 
-		mainWindow.on('show', () => {
-			tray.setHighlightMode('always');
-		});
+			mainWindow.on('show', () => {
+				tray.setHighlightMode('always');
+			});
 
-		tray.on('click', () => {
-			contextMenu.items[1].checked = !contextMenu.items[1].checked;
+			tray.on('click', () => {
+				contextMenu.items[1].checked = !contextMenu.items[1].checked;
+			});
+			tray.on('double-click', () => {
+				mainWindow.show();
+			});
+			tray.setToolTip(app.getName());
+			tray.setContextMenu(contextMenu);
+			ipcMain.on('update-filter', async (event, arg) => {
+				store.set(`${arg.config}.${arg.item}`, arg.value);
+			});
+		}).catch(err => {
+			log.error(err);
 		});
-		tray.on('double-click', () => {
-			mainWindow.show();
-		});
-		tray.setToolTip(app.getName());
-		tray.setContextMenu(contextMenu);
-		ipcMain.on('update-filter', async (event, arg) => {
-			store.set(`${arg.config}.${arg.item}`, arg.value);
-		});
-	}).catch(err => {
-		log.error(err);
-	});
+	} else {
+		updateLog('No connection could be made - are you online?');
+		updateLog('Quitting...');
+		setTimeout(() => {
+			app.isQuiting = true;
+			app.quit();
+		}, 5000);
+	}
 });
 
 app.on('window-all-closed', () => {
