@@ -211,8 +211,14 @@ export const checkInvasion = async () => {
 };
 
 function postAlertNotification(item, body, icon) {
+	const nowTs = ts.now() * 1000;
+	const activationTs = ts.fromDate(item.activation) * 1000;
+	let title = 'New Alert!';
+	if (nowTs < activationTs) {
+		title = 'New Upcoming Alert!';
+	}
 	const alertNotification = new Notification({
-		title: 'New alert!',
+		title,
 		body,
 		icon
 	});
@@ -221,7 +227,7 @@ function postAlertNotification(item, body, icon) {
 
 function postInvasionNotification(item, body) {
 	const alertNotification = new Notification({
-		title: 'New invasion!',
+		title: 'New Invasion!',
 		body,
 		icon: false
 	});
