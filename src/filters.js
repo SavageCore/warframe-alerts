@@ -133,3 +133,10 @@ export function expiry(expiry) {
 	}
 	return false;
 }
+
+export function isGiftLotus(description) {
+	if (description === 'Gift From The Lotus') {
+		return true;
+	}
+	return false;
+}

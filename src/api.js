@@ -65,8 +65,9 @@ function matchesAlertFilter(alertObj) {
 	const tracesCheck = filters.traces(traces, alertObj);
 	const kubrowCheck = filters.kubrow(kubrowEgg, alertObj.itemString);
 	const weaponSkinCheck = filters.weaponSkins(weaponSkin, alertObj);
+	const giftLotusCheck = filters.isGiftLotus(alertObj.description);
 
-	if (planetsCheck && (creditsCheck || endoCheck || itemsCheck || customItemsCheck || helmetsCheck || tracesCheck || kubrowCheck || weaponSkinCheck)) {
+	if (planetsCheck && (creditsCheck || endoCheck || itemsCheck || customItemsCheck || helmetsCheck || tracesCheck || kubrowCheck || weaponSkinCheck || giftLotusCheck)) {
 		return true;
 	}
 	return false;
@@ -103,6 +104,7 @@ export const checkAlert = async ws => {
 			node: item.mission.node,
 			id: item.id,
 			itemString: item.mission.reward.itemString,
+			description: item.mission.description,
 			credits: item.mission.reward.credits,
 			thumbnail: item.mission.reward.thumbnail,
 			rewardTypes: item.rewardTypes,

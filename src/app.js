@@ -108,6 +108,7 @@ function populateOtherPage(settings, configNode) {
 	let helmetsChecked = '';
 	let weaponSkinsChecked = '';
 	let kubrowEggChecked = '';
+	let giftLotusChecked = '';
 	const creditsValue = settings.credits || 0;
 	const endoValue = settings.endo || 0;
 	const tracesValue = settings.traces || 0;
@@ -121,9 +122,13 @@ function populateOtherPage(settings, configNode) {
 	if (is.truthy(settings.kubrowEgg)) {
 		kubrowEggChecked = ' checked ';
 	}
+	if (is.truthy(settings.giftLotus)) {
+		giftLotusChecked = ' checked ';
+	}
 	HTML += '<p><input type="checkbox" id="helmets" class="filled-in"' + helmetsChecked + 'data-config-node="' + configNode + '"/><label for="helmets" title="Shift click to Select/Deselect All">Helmets</label></p>';
 	HTML += '<p><input type="checkbox" id="weaponSkins" class="filled-in"' + weaponSkinsChecked + 'data-config-node="' + configNode + '"/><label for="weaponSkins">Weapon Skins</label></p>';
 	HTML += '<p><input type="checkbox" id="kubrowEgg" class="filled-in"' + kubrowEggChecked + 'data-config-node="' + configNode + '"/><label for="kubrowEgg">Kubrow Eggs</label></p>';
+	HTML += '<p><input type="checkbox" id="giftLotus" class="filled-in"' + giftLotusChecked + 'data-config-node="' + configNode + '"/><label for="giftLotus">Gift from the Lotus</label></p>';
 	HTML += '<p>At least: </p>';
 	HTML += '<p><input type="number" id="credits" data-config-node="' + configNode + '" value="' + creditsValue + '"/><label for="credits">Credits</label></p>';
 	HTML += '<p><input type="number" id="endo" data-config-node="' + configNode + '" value="' + endoValue + '"/><label for="endo">Endo</label></p>';
