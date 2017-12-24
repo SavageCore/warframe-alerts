@@ -84,6 +84,7 @@ const defaultConfig = {
 				'Ice Storm': false,
 				'Lethal Torrent': false,
 				'Lotus Rifle Random Mod Rare': false,
+				'Player Melee Weapon Random Mod Rare': false,
 				'Rending Strike': false,
 				'Seeking Fury': false,
 				Shred: false,
