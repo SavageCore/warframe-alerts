@@ -176,23 +176,28 @@ export const checkInvasion = async () => {
 					completed: item.completed
 				};
 				if (Notification.isSupported()) {
-					let bodyStr = `${invasionObj.node} - ${invasionObj.attacking.faction}`;
+					const bodyStr = `${invasionObj.node} - ${invasionObj.attacking.faction}`;
+					let bodyStrText = bodyStr;
+					let bodyStrHTML = bodyStr;
 					if (invasionObj.attacking.itemString) {
-						bodyStr += ` (${invasionObj.attacking.itemString})`;
+						bodyStrText += ` (${invasionObj.attacking.itemString})`;
+						bodyStrHTML += ` (<a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(invasionObj.attacking.itemString.replace(/(\d+) /, ''))}" class="js-external-link" title="Open Warframe Wiki">${invasionObj.attacking.itemString}</a>)`;
 					}
-					bodyStr += ` VS. ${invasionObj.defending.faction}`;
+					bodyStrText += ` VS. ${invasionObj.defending.faction}`;
+					bodyStrHTML += ` VS. ${invasionObj.defending.faction}`;
 					if (invasionObj.defending.itemString) {
-						bodyStr += ` (${invasionObj.defending.itemString})`;
+						bodyStrText += ` (${invasionObj.defending.itemString})`;
+						bodyStrHTML += ` (<a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(invasionObj.defending.itemString.replace(/(\d+) /, ''))}" class="js-external-link" title="Open Warframe Wiki">${invasionObj.defending.itemString}</a>)`;
 					}
 					if (!Object.prototype.hasOwnProperty.call(seenInvasions, item.id) && await matchesInvasionFilter(invasionObj)) {
-						postInvasionNotification(item, bodyStr);
-						log.info(`Invasion: ${bodyStr}`);
-						updateLog(`Invasion: ${bodyStr}`, 'success');
+						postInvasionNotification(item, bodyStrText);
+						log.info(`Invasion: ${bodyStrText}`);
+						updateLog(`Invasion: ${bodyStrHTML}`, 'success');
 						seenInvasions = Object.assign(seenInvasions, seenInvasions[item.id] = item.completed);
 						store.set('seenInvasions', seenInvasions);
 					} else if (store.get('app.logUnmatched', false) && !Object.prototype.hasOwnProperty.call(seenInvasions, item.id)) {
-						log.info(`Unmatched invasion: ${bodyStr}`);
-						updateLog(`Unmatched invasion: ${bodyStr}`, 'error');
+						log.info(`Unmatched invasion: ${bodyStrText}`);
+						updateLog(`Unmatched invasion: ${bodyStrHTML}`, 'error');
 						seenInvasions = Object.assign(seenInvasions, seenInvasions[item.id] = item.completed);
 						store.set('seenInvasions', seenInvasions);
 					}
