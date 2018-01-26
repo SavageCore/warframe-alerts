@@ -185,3 +185,11 @@ test('Expiry filter', t => {
 	t.true(filters.expiry(ahead));
 	t.true(filters.expiry(ts.toDate(ts.now())));
 });
+
+test('Gift from the Lotus filter', t => {
+	const alertObj = {
+		description: 'Gift From The Lotus'
+	};
+	t.true(filters.isGiftLotus(alertObj.description));
+	t.false(filters.isGiftLotus('💀'));
+});
