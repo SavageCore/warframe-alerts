@@ -46,7 +46,7 @@ export function customItems(items, itemString) {
 		for (let i = 0; i < customItems.length; i++) {
 			if (customItems[i].trim() === itemString && itemString !== '') {
 				itemsCheck = true;
-				if (i >= customItems.length) {
+				if (i < customItems.length) {
 					break;
 				}
 			}
