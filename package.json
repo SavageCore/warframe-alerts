@@ -80,7 +80,7 @@
 		"gulp": "^3.9.1",
 		"gulp-batch": "^1.0.5",
 		"gulp-less": "^3.3.2",
-		"gulp-plumber": "^1.1.0",
+		"gulp-plumber": "^1.2.0",
 		"gulp-util": "^3.0.8",
 		"gulp-watch": "^4.3.11",
 		"nyc": "^11.3.0",
