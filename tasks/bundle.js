@@ -30,7 +30,7 @@ module.exports = (src, dest, opts) => {
   ];
 
   return rollup({
-    entry: src,
+    input: src,
     external: generateExternalModulesList(),
     cache: cached[src],
     plugins: plugins.concat(options.rollupPlugins || []),
@@ -41,8 +41,8 @@ module.exports = (src, dest, opts) => {
     const jsFile = path.basename(dest);
     return bundle.generate({
       format: 'cjs',
-      sourceMap: true,
-      sourceMapFile: jsFile,
+      sourcemap: true,
+      sourcemapFile: jsFile,
     }).then(result => {
       // Wrap code in self invoking function so the constiables don't
       // pollute the global namespace.
