@@ -30,7 +30,7 @@ module.exports = (src, dest, opts) => {
   ];
 
   return rollup({
-    entry: src,
+    input: src,
     external: generateExternalModulesList(),
     cache: cached[src],
     plugins: plugins.concat(options.rollupPlugins || []),
