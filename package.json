@@ -79,7 +79,7 @@
 		"electron-builder": "^19.16.0",
 		"gulp": "^3.9.1",
 		"gulp-batch": "^1.0.5",
-		"gulp-less": "^3.3.2",
+		"gulp-less": "^3.5.0",
 		"gulp-plumber": "^1.2.0",
 		"gulp-util": "^3.0.8",
 		"gulp-watch": "^5.0.0",
