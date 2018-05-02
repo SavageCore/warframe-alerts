@@ -23,9 +23,9 @@ gulp.task('bundle', () => {
 
 gulp.task('less', () => {
 	return gulp.src(srcDir.path('stylesheets/main.less'))
-  .pipe(plumber())
-  .pipe(less())
-  .pipe(gulp.dest(destDir.path('stylesheets')));
+		.pipe(plumber())
+		.pipe(less())
+		.pipe(gulp.dest(destDir.path('stylesheets')));
 });
 
 gulp.task('environment', () => {

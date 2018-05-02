@@ -30,7 +30,8 @@ export function items(items, itemString) {
 			if (items[itemType][itemString] === true) {
 				itemsCheck = true;
 				return itemsCheck;
-			} else if (items[itemType][resourceFromString(itemString)] === true) {
+			}
+			if (items[itemType][resourceFromString(itemString)] === true) {
 				itemsCheck = true;
 				return itemsCheck;
 			}
