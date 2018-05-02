@@ -55,7 +55,7 @@
 		"electron-log": "^2.2.9",
 		"electron-process-manager": "^0.5.1",
 		"electron-store": "^1.3.0",
-		"electron-unhandled": "^0.2.0",
+		"electron-unhandled": "^1.1.0",
 		"electron-updater": "^2.21.8",
 		"fs-jetpack": "^1.3.0",
 		"got": "^7.1.0",
