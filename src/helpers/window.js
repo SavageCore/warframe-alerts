@@ -1,7 +1,7 @@
 import {app, BrowserWindow,	Notification,	screen} from 'electron';
 import jetpack from 'fs-jetpack';
 
-import env from '../env';
+import env from 'env';
 import store from './config';
 
 const log = require('electron-log');

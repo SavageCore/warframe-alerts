@@ -1,6 +1,6 @@
 import {app} from 'electron';
+import env from 'env';
 import defaultConfig from '../config';
-import env from '../env';
 
 const Store = require('electron-store');
 
