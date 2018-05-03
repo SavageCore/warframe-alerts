@@ -1,5 +1,5 @@
 import {app} from 'electron';
-import env from 'env';
+import env from 'env'; // eslint-disable-line import/no-unresolved
 import defaultConfig from '../config';
 
 const Store = require('electron-store');
