@@ -27,16 +27,7 @@
 	"ava": {
 		"concurrency": 5,
 		"failFast": true,
-		"require": "babel-core/register",
-		"babel": {
-			"testOptions": {
-				"presets": [
-					"@ava/stage-4",
-					"@ava/transform-test-files"
-				],
-				"babelrc": false
-			}
-		}
+		"require": "babel-core/register"
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
