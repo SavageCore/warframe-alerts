@@ -1,14 +1,10 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "browsers": "last 2 Chrome versions",
-          "node": "current"
-        }
+	"presets": [
+		["env", {
+      "targets": {
+        "node": "current"
       }
-    ]
-  ],
+    }]
+	],
   "plugins": [["transform-object-rest-spread", { "useBuiltIns": true }]]
 }
