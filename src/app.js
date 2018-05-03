@@ -1,6 +1,7 @@
 /* global document window URL */
 /* eslint-disable import/no-unassigned-import */
 
+import './stylesheets/main.less';
 import {ipcRenderer} from 'electron';
 import './helpers/external-links';
 

@@ -3,13 +3,12 @@ import url from 'url';
 import {app, ipcMain, Menu, Tray} from 'electron';
 import {autoUpdater} from 'electron-updater';
 
+import env from 'env';
 import devMenuTemplate from './menu/dev-menu-template';
 import createWindow from './helpers/window';
 import {checkAlert, checkInvasion} from './api';
 import store from './helpers/config';
 import defaultConfig from './config';
-
-import env from './env';
 
 const log = require('electron-log');
 const makeDir = require('make-dir');
