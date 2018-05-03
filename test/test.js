@@ -11,7 +11,7 @@ const electron = path.resolve(__dirname, '../node_modules/electron/dist/electron
 test('App loading', async t => {
 	const app = new Application({
 		path: electron,
-		args: ['.'],
+		args: ['.', '--env=test'],
 		startTimeout: 30000,
 		waitTimeout: 30000
 	});
