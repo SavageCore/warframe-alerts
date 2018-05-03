@@ -27,16 +27,16 @@
 	"ava": {
 		"concurrency": 5,
 		"failFast": true,
-		"require": "babel-core/register"
+		"require": "@babel/register"
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"pretest": "webpack --config=build/webpack.app.config.js --env=test --display=errors-only",
-		"test-old": "xo && nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf",
-		"test": "nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf",
+		"test": "xo && nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf",
 		"start": "node build/start.js",
 		"start-pro": "node build/start.js --env=production",
-		"release": "npm test && webpack --config=build/webpack.app.config.js --env=production && build  --win -p always"
+		"release": "npm test && webpack --config=build/webpack.app.config.js --mode=production && build --win -p always",
+		"build": "npm test && webpack --config=build/webpack.app.config.js --mode=production && build --win -p never"
 	},
 	"dependencies": {
 		"@sindresorhus/is": "^0.8.0",
@@ -65,6 +65,7 @@
 		"@babel/cli": "^7.0.0-beta.46",
 		"@babel/core": "^7.0.0-beta.46",
 		"@babel/preset-env": "^7.0.0-beta.46",
+		"@babel/register": "^7.0.0-beta.46",
 		"ava": "^0.25.0",
 		"babel-loader": "^8.0.0-beta.2",
 		"babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
