@@ -91,7 +91,8 @@ app.on('ready', async () => {
 		fullscreenable: false,
 		resizable: false,
 		webPreferences: {
-			devtools: false
+			devtools: false,
+			contextIsolation: true
 		}
 	});
 
