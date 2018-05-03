@@ -40,6 +40,7 @@ module.exports = env => {
 				filename: devMode ? '[name].css' : '[name].[hash].css',
 				chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
 			})
-		]
+		],
+		mode: devMode ? 'development' : 'production'
 	};
 };

@@ -35,8 +35,9 @@
 		"test": "xo && nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf",
 		"start": "node build/start.js",
 		"start-pro": "node build/start.js --env=production",
-		"release": "npm test && webpack --config=build/webpack.app.config.js --mode=production && build --win -p always",
-		"build": "npm test && webpack --config=build/webpack.app.config.js --mode=production && build --win -p never"
+		"release": "npm test && webpack --config=build/webpack.app.config.js  --env=production --mode=production && electron-builder --win -p always",
+		"build": "npm test && webpack --config=build/webpack.app.config.js --env=production --mode=production && electron-builder --win -p never",
+		"build-dev": "npm test && webpack --config=build/webpack.app.config.js --env=development --mode=development && electron-builder --win -p never"
 	},
 	"dependencies": {
 		"@sindresorhus/is": "^0.8.0",
@@ -53,6 +54,7 @@
 		"make-dir": "^1.2.0",
 		"materialize-css": "^0.100.2",
 		"minimist": "^1.2.0",
+		"mri": "^1.1.0",
 		"os-locale": "^2.1.0",
 		"spectron": "^3.8.0",
 		"ucfirst": "^1.0.0",
