@@ -12,8 +12,8 @@ test('App loading', async t => {
 	const app = new Application({
 		path: electron,
 		args: ['.'],
-		startTimeout: 10000,
-		waitTimeout: 10000
+		startTimeout: 30000,
+		waitTimeout: 30000
 	});
 	await app.start();
 	await app.client.waitUntilWindowLoaded();
