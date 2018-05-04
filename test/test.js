@@ -1,28 +1,28 @@
 import test from 'ava';
-import {Application} from 'spectron';
+// Import {Application} from 'spectron';
 import * as filters from '../src/filters';
 import defaultConfig from '../src/config';
 
-const path = require('path');
+// Const path = require('path');
 const ts = require('unix-timestamp');
 
-const electron = path.resolve(__dirname, '../node_modules/electron/dist/electron.exe');
+// Const electron = path.resolve(__dirname, '../node_modules/electron/dist/electron.exe');
 
-test('App loading', async t => {
-	const app = new Application({
-		path: electron,
-		args: ['.'],
-		startTimeout: 30000,
-		waitTimeout: 30000
-	});
-	await app.start();
-	await app.client.waitUntilWindowLoaded();
-	t.is(await app.client.getWindowCount(), 1);
-	t.regex(await app.client.getText('#log'), /Warframe Alerts v\d+.\d+.\d+ Started/);
-	if (app && app.isRunning()) {
-		await app.stop();
-	}
-});
+// Test('App loading', async t => {
+// 	const app = new Application({
+// 		path: electron,
+// 		args: ['.'],
+// 		startTimeout: 30000,
+// 		waitTimeout: 30000
+// 	});
+// 	await app.start();
+// 	await app.client.waitUntilWindowLoaded();
+// 	t.is(await app.client.getWindowCount(), 1);
+// 	t.regex(await app.client.getText('#log'), /Warframe Alerts v\d+.\d+.\d+ Started/);
+// 	if (app && app.isRunning()) {
+// 		await app.stop();
+// 	}
+// });
 
 test('Planets filter', t => {
 	const alertObj = {
