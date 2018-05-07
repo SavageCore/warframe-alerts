@@ -46,7 +46,7 @@ export default (name, options) => {
 	};
 
 	const resetToDefaults = () => {
-		const bounds = screen.getPrimaryDisplay().bounds;
+		const {bounds} = screen.getPrimaryDisplay().bounds;
 		return Object.assign({}, defaultSize, {
 			x: (bounds.width - defaultSize.width) / 2,
 			y: (bounds.height - defaultSize.height) / 2
