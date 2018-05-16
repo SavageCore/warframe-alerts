@@ -45,7 +45,7 @@
 		"start": "gulp start",
 		"start-pro": "gulp start --env=production",
 		"pretest": "gulp build --env=test",
-		"test": "xo && nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf"
+		"test": "stylelint \"src/stylesheets/*.less\" && xo && nyc ava && nyc report --reporter=text-lcov > coverage.lcov && codecov -t 2a1291c2-2f6d-41f1-bdde-175a377fcbbf"
 	},
 	"dependencies": {
 		"@ava/babel-preset-stage-4": "^1.1.0",
@@ -86,6 +86,8 @@
 		"nyc": "^11.8.0",
 		"rollup": "^0.59.0",
 		"source-map-support": "^0.5.6",
+		"stylelint": "^9.2.0",
+		"stylelint-config-standard": "^18.2.0",
 		"xo": "^0.21.0"
 	}
 }

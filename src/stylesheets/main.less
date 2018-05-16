@@ -42,15 +42,16 @@ nav {
   background-color: #3d4749 !important;
 }
 
+a {
+  color: @success;
+}
+
+a:hover {
+  color: #ffa726;
+}
+
 .tabs .tab a {
   font-size: 12px;
-}
-
-.container .row {
-  margin: 0;
-}
-
-.tabs .tab a {
   color: @light-grey;
 }
 
@@ -84,6 +85,14 @@ nav {
   color: @light-grey;
 }
 
+#log a:hover {
+  color: #ffa726;
+}
+
+.container .row {
+  margin: 0;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   background-color: #0c0d0f;
@@ -110,13 +119,4 @@ nav {
 #menuBar {
   position: fixed;
   top: 0;
-}
-
-a {
-  color: @success;
-}
-
-a:hover,
-#log a:hover {
-  color: #ffa726;
 }
