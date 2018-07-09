@@ -73,7 +73,7 @@
 		"ava": "^0.25.0",
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
-		"codecov": "^3.0.3",
+		"codecov": "^3.0.4",
 		"devtron": "^1.4.0",
 		"electron": "^2.0.4",
 		"electron-builder": "^20.19.2",
