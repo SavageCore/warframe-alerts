@@ -4,7 +4,7 @@
 	"description": "Warframe alert notifications that are filterable",
 	"version": "0.1.6",
 	"author": "SavageCore <talk@savagecore.eu>",
-	"copyright": "© 2017, SavageCore",
+	"copyright": "© 2018, SavageCore",
 	"homepage": "http://savagecore.eu",
 	"license": "MIT",
 	"main": "app/background.js",
