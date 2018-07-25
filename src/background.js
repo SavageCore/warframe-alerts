@@ -20,7 +20,6 @@ const ts = require('unix-timestamp');
 const WorldState = require('warframe-worldstate-parser');
 const unhandled = require('electron-unhandled');
 const isOnline = require('is-online');
-const pjson = require('../package.json');
 
 unhandled({
 	logger: err => {
@@ -83,7 +82,7 @@ if (shouldQuit) {
 }
 
 app.on('ready', async () => {
-	app.setAppUserModelId(pjson.build.appId);
+	app.setAppUserModelId('eu.savagecore.warframe-alerts');
 	mainWindow = createWindow('main', {
 		width: 1000,
 		height: 600,
