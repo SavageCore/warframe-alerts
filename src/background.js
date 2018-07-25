@@ -92,7 +92,7 @@ app.on('ready', async () => {
 		resizable: false,
 		webPreferences: {
 			devtools: false,
-			contextIsolation: true
+			contextIsolation: false
 		}
 	});
 
