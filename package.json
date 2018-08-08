@@ -76,7 +76,7 @@
 		"codecov": "^3.0.4",
 		"devtron": "^1.4.0",
 		"electron": "^2.0.6",
-		"electron-builder": "^20.26.1",
+		"electron-builder": "^20.27.1",
 		"gulp": "^3.9.1",
 		"gulp-batch": "^1.0.5",
 		"gulp-less": "^4.0.1",
