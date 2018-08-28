@@ -83,7 +83,7 @@
 		"gulp-plumber": "^1.2.0",
 		"gulp-util": "^3.0.8",
 		"gulp-watch": "^5.0.1",
-		"nyc": "^12.0.2",
+		"nyc": "^13.0.1",
 		"rollup": "^0.65.0",
 		"source-map-support": "^0.5.9",
 		"stylelint": "^9.5.0",
