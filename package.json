@@ -64,7 +64,7 @@
 		"materialize-css": "^0.100.2",
 		"minimist": "^1.2.0",
 		"os-locale": "^3.0.0",
-		"spectron": "^3.8.0",
+		"spectron": "^4.0.0",
 		"ucfirst": "^1.0.0",
 		"unix-timestamp": "^0.2.0",
 		"warframe-worldstate-parser": "^2.0.3"
