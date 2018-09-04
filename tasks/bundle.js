@@ -81,8 +81,8 @@ module.exports = (src, dest, opts) => {
 				]);
 			});
 		})
-		.catch(e => {
-			console.error(e);
-			throw e;
+		.catch(error => {
+			console.error(error);
+			throw error;
 		});
 };

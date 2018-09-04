@@ -119,11 +119,11 @@ app.on('ready', async () => {
 
 		const tray = new Tray(path.join(__dirname, '/icon.ico'));
 
-		mainWindow.webContents.on('did-finish-load', async () => {
+		mainWindow.webContents.on('did-finish-load', async () => { // eslint-disable-line require-await
 			updateLog(`Warframe Alerts v${app.getVersion()} Started`);
 			mainWindow.webContents.send('filter-data', store.get('filters'), defaultConfig.filters);
 			checkApi();
-			setInterval(async () => {
+			setInterval(async () => { // eslint-disable-line require-await
 				checkApi();
 			}, 60000);
 		});
@@ -193,11 +193,11 @@ app.on('ready', async () => {
 			});
 			tray.setToolTip(app.getName());
 			tray.setContextMenu(contextMenu);
-			ipcMain.on('update-filter', async (event, arg) => {
+			ipcMain.on('update-filter', async (event, arg) => { // eslint-disable-line require-await
 				store.set(`${arg.config}.${arg.item}`, arg.value);
 			});
-		}).catch(err => {
-			log.error(err);
+		}).catch(error => {
+			log.error(error);
 		});
 	} else {
 		updateLog('No connection could be made - are you online?');
@@ -223,8 +223,8 @@ function updateCheck() {
 	if (diff >= 86400000 || typeof lastUpdateCheck === 'undefined') {
 		autoUpdater.checkForUpdatesAndNotify().then(() => {
 			store.set('app.lastUpdateCheck', nowTs);
-		}).catch(err => {
-			console.log(err);
+		}).catch(error => {
+			console.log(error);
 		});
 	}
 }

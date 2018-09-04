@@ -21,8 +21,8 @@ export default (name, options) => {
 		let restoredState = {};
 		try {
 			restoredState = userDataDir.read(stateStoreFile, 'json');
-		} catch (err) {
-			log.error(err);
+		} catch (error) {
+			log.error(error);
 		}
 		return Object.assign({}, defaultSize, restoredState);
 	};
@@ -85,7 +85,7 @@ export default (name, options) => {
 				if (store.get('app.trayWarning') === false) {
 					const minimiseNotification = new Notification({
 						title: app.getName(),
-						body: `Running in tray - right click icon to Quit`,
+						body: 'Running in tray - right click icon to Quit',
 						icon: false
 					});
 					minimiseNotification.show();
