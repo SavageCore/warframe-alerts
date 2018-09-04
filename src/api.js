@@ -73,7 +73,7 @@ function matchesAlertFilter(alertObj) {
 	return false;
 }
 
-async function matchesInvasionFilter(invasionObj) {
+async function matchesInvasionFilter(invasionObj) { // eslint-disable-line require-await
 	const planets = store.get('filters.planets');
 	const credits = store.get('filters.other.credits', 0);
 	const items = store.get('filters.items');
@@ -97,7 +97,7 @@ async function matchesInvasionFilter(invasionObj) {
 	return false;
 }
 
-export const checkAlert = async ws => {
+export const checkAlert = async ws => { // eslint-disable-line require-await
 	ws.alerts.forEach(item => {
 		let seenAlerts = store.get('seenAlerts', {});
 		const alertObj = {
@@ -151,7 +151,7 @@ export const checkAlert = async ws => {
 	cleanupAlerts();
 };
 
-export const checkInvasion = async () => {
+export const checkInvasion = async () => { // eslint-disable-line require-await
 	let seenInvasions = store.get('seenInvasions', {});
 
 	got('http://content.warframe.com/dynamic/worldState.php')
@@ -207,8 +207,8 @@ export const checkInvasion = async () => {
 			});
 			cleanupInvasions(ws);
 		})
-		.catch(err => {
-			console.log(err);
+		.catch(error => {
+			console.log(error);
 		});
 };
 
