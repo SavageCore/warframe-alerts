@@ -4,10 +4,10 @@
 import {ipcRenderer} from 'electron';
 import './helpers/external-links';
 
-window.jQuery = require('../node_modules/jquery/dist/jquery.js');
+window.jQuery = require('../node_modules/jquery/dist/jquery.js'); // eslint-disable-line import/no-unresolved
 
 window.$ = window.jQuery;
-window.Hammer = require('../node_modules/materialize-css/js/hammer.min.js');
+window.Hammer = require('../node_modules/materialize-css/js/hammer.min.js'); // eslint-disable-line import/no-unresolved
 require('materialize-css');
 
 const log = require('electron-log');
