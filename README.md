@@ -1,4 +1,4 @@
-# warframe-alerts [![Build status](https://ci.appveyor.com/api/projects/status/14pidw7jht7cn0cm?svg=true)](https://ci.appveyor.com/project/SavageCore/warframe-alerts) [![Dependency Status](https://dependencyci.com/github/SavageCore/warframe-alerts/badge)](https://dependencyci.com/github/SavageCore/warframe-alerts) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![codecov](https://codecov.io/gh/SavageCore/warframe-alerts/branch/master/graph/badge.svg)](https://codecov.io/gh/SavageCore/warframe-alerts)
+# warframe-alerts [![Build status](https://ci.appveyor.com/api/projects/status/14pidw7jht7cn0cm?svg=true)](https://ci.appveyor.com/project/SavageCore/warframe-alerts) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![codecov](https://codecov.io/gh/SavageCore/warframe-alerts/branch/master/graph/badge.svg)](https://codecov.io/gh/SavageCore/warframe-alerts) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=SavageCore/warframe-alerts)](https://dependabot.com)
 
 ![Preview](https://i.imgur.com/gfLu35x.png)
 
