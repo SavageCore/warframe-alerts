@@ -49,7 +49,7 @@
 	},
 	"dependencies": {
 		"@ava/babel-preset-stage-4": "^1.1.0",
-		"@sindresorhus/is": "^0.12.0",
+		"@sindresorhus/is": "^0.13.0",
 		"auto-launch": "^5.0.5",
 		"electron-context-menu": "^0.10.1",
 		"electron-log": "^2.2.17",
