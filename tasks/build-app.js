@@ -43,6 +43,7 @@ gulp.task('watch', () => {
 			if (err) {
 				utils.beepSound();
 			}
+
 			done(err);
 		};
 	};

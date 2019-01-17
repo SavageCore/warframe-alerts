@@ -10,9 +10,11 @@ const supportExternalLinks = event => {
 		if (element.nodeName === 'A') {
 			href = element.getAttribute('href');
 		}
+
 		if (element.classList.contains('js-external-link')) {
 			isExternal = true;
 		}
+
 		if (href && isExternal) {
 			shell.openExternal(href);
 			event.preventDefault();

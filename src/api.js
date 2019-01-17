@@ -26,6 +26,7 @@ function cleanupAlerts() {
 			}
 		}
 	}
+
 	store.set('seenAlerts', seenAlerts);
 }
 
@@ -56,6 +57,7 @@ function matchesAlertFilter(alertObj) {
 	if (!expiryCheck) {
 		return false;
 	}
+
 	const planetsCheck = filters.planets(planets, filters.planetFromNode(alertObj.node));
 	const itemsCheck = filters.items(items, alertObj.itemString);
 	const customItemsCheck = filters.customItems(custom, alertObj.itemString);
@@ -70,10 +72,11 @@ function matchesAlertFilter(alertObj) {
 	if (planetsCheck && (creditsCheck || endoCheck || itemsCheck || customItemsCheck || helmetsCheck || tracesCheck || kubrowCheck || weaponSkinCheck || giftLotusCheck)) {
 		return true;
 	}
+
 	return false;
 }
 
-async function matchesInvasionFilter(invasionObj) { // eslint-disable-line require-await
+async function matchesInvasionFilter(invasionObj) {
 	const planets = store.get('filters.planets');
 	const credits = store.get('filters.other.credits', 0);
 	const items = store.get('filters.items');
@@ -83,6 +86,7 @@ async function matchesInvasionFilter(invasionObj) { // eslint-disable-line requi
 	if (completedCheck === true) {
 		return false;
 	}
+
 	const planetsCheck = filters.planets(planets, filters.planetFromNode(invasionObj.node));
 	const attackingItemsCheck = filters.items(items, invasionObj.attacking.itemString);
 	const defendingItemsCheck = filters.items(items, invasionObj.defending.itemString);
@@ -94,10 +98,11 @@ async function matchesInvasionFilter(invasionObj) { // eslint-disable-line requi
 	if (planetsCheck && ((attackingCreditsCheck || defendingCreditsCheck) || (attackingCustomItemsCheck || defendingCustomItemsCheck) || (attackingItemsCheck || defendingItemsCheck))) {
 		return true;
 	}
+
 	return false;
 }
 
-export const checkAlert = async ws => { // eslint-disable-line require-await
+export const checkAlert = async ws => {
 	ws.alerts.forEach(item => {
 		let seenAlerts = store.get('seenAlerts', {});
 		const alertObj = {
@@ -117,6 +122,7 @@ export const checkAlert = async ws => { // eslint-disable-line require-await
 			bodyStrText += ` - ${item.mission.reward.itemString}`;
 			bodyStrHTML += ` - <a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(item.mission.reward.itemString.replace(/(\d+) /, ''))}" class="js-external-link" title="Open Warframe Wiki">${item.mission.reward.itemString}</a>`;
 		}
+
 		if (Notification.isSupported()) {
 			if (!Object.prototype.hasOwnProperty.call(seenAlerts, item.id) && matchesAlertFilter(alertObj)) {
 				if (alertObj.thumbnail) {
@@ -129,6 +135,7 @@ export const checkAlert = async ws => { // eslint-disable-line require-await
 							postAlertNotification(item, bodyStrText, thumbPath);
 						});
 					}
+
 					log.info(`Alert: ${bodyStrText}`);
 					updateLog(`Alert: ${bodyStrHTML}`, 'success');
 					seenAlerts = Object.assign(seenAlerts, seenAlerts[item.id] = item.expiry);
@@ -151,7 +158,7 @@ export const checkAlert = async ws => { // eslint-disable-line require-await
 	cleanupAlerts();
 };
 
-export const checkInvasion = async () => { // eslint-disable-line require-await
+export const checkInvasion = async () => {
 	let seenInvasions = store.get('seenInvasions', {});
 
 	got('http://content.warframe.com/dynamic/worldState.php')
@@ -185,12 +192,14 @@ export const checkInvasion = async () => { // eslint-disable-line require-await
 						bodyStrText += ` (${invasionObj.attacking.itemString})`;
 						bodyStrHTML += ` (<a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(invasionObj.attacking.itemString.replace(/(\d+) /, ''))}" class="js-external-link" title="Open Warframe Wiki">${invasionObj.attacking.itemString}</a>)`;
 					}
+
 					bodyStrText += ` VS. ${invasionObj.defending.faction}`;
 					bodyStrHTML += ` VS. ${invasionObj.defending.faction}`;
 					if (invasionObj.defending.itemString) {
 						bodyStrText += ` (${invasionObj.defending.itemString})`;
 						bodyStrHTML += ` (<a href="http://warframe.wikia.com/wiki/Special:Search?query=${encodeURIComponent(invasionObj.defending.itemString.replace(/(\d+) /, ''))}" class="js-external-link" title="Open Warframe Wiki">${invasionObj.defending.itemString}</a>)`;
 					}
+
 					if (!Object.prototype.hasOwnProperty.call(seenInvasions, item.id) && await matchesInvasionFilter(invasionObj)) {
 						postInvasionNotification(item, bodyStrText);
 						log.info(`Invasion: ${bodyStrText}`);
@@ -219,6 +228,7 @@ function postAlertNotification(item, body, icon) {
 	if (nowTs < activationTs) {
 		title = 'New Upcoming Alert!';
 	}
+
 	const alertNotification = new Notification({
 		title,
 		body,
@@ -244,5 +254,6 @@ function hasValue(obj, key, value) {
 			}
 		}
 	}
+
 	return false;
 }

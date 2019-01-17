@@ -43,6 +43,7 @@ ipcRenderer.on('log-data', (event, msg, status) => {
 	if (status) {
 		statusClass = ` class="${status}"`;
 	}
+
 	logElem.innerHTML += `<p${statusClass}>${msg}</p>\n`;
 	if (autoScroll) {
 		scrollContainer.scrollTop = logElem.scrollHeight;
@@ -74,6 +75,7 @@ document.querySelector('#menuBar').addEventListener('click', () => {
 		document.querySelector('body').style = 'overflow-y: hidden';
 		scrollContainer.scrollTop = 0;
 	}
+
 	autoScroll = false;
 }, false);
 
@@ -91,14 +93,17 @@ function populatePage(page, settings, configNode, defaults) {
 				if (is.truthy(settings[item])) {
 					checked = ' checked ';
 				}
+
 				HTML += '<p><input type="checkbox" id="' + item + '" class="filled-in"' + checked + 'data-config-node="' + configNode + '"/><label for="' + item + '" title="Shift click to Select/Deselect All"><a href="http://warframe.wikia.com/wiki/Special:Search?query=' + encodeURIComponent(item.replace(/(\d+) /, '')) + '" class="js-external-link" title="Open Warframe Wiki">' + ucfirst(item) + '</a></label></p>';
 			}
+
 			// New column after 12 lines
 			if ((++i % 12) === 0 && i !== 0) {
 				HTML += '</div><div class="col s4">';
 			}
 		}
 	}
+
 	HTML += '</div>';
 	HTML += '</div>';
 	HTML += '</form>\n';
@@ -122,15 +127,19 @@ function populateOtherPage(settings, configNode) {
 	if (is.truthy(settings.helmets)) {
 		helmetsChecked = ' checked ';
 	}
+
 	if (is.truthy(settings.weaponSkins)) {
 		weaponSkinsChecked = ' checked ';
 	}
+
 	if (is.truthy(settings.kubrowEgg)) {
 		kubrowEggChecked = ' checked ';
 	}
+
 	if (is.truthy(settings.giftLotus)) {
 		giftLotusChecked = ' checked ';
 	}
+
 	HTML += '<p><input type="checkbox" id="helmets" class="filled-in"' + helmetsChecked + 'data-config-node="' + configNode + '"/><label for="helmets" title="Shift click to Select/Deselect All">Helmets</label></p>';
 	HTML += '<p><input type="checkbox" id="weaponSkins" class="filled-in"' + weaponSkinsChecked + 'data-config-node="' + configNode + '"/><label for="weaponSkins">Weapon Skins</label></p>';
 	HTML += '<p><input type="checkbox" id="kubrowEgg" class="filled-in"' + kubrowEggChecked + 'data-config-node="' + configNode + '"/><label for="kubrowEgg">Kubrow Eggs</label></p>';
@@ -154,6 +163,7 @@ function bindEvents(page) {
 	for (let i = 0; i < checkboxes.length; i++) {
 		checkboxes[i].addEventListener('click', checkAll, false);
 	}
+
 	const body = document.querySelector(`form#${page}`);
 	if (body) {
 		body.addEventListener('change', evt => {
