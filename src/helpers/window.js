@@ -24,6 +24,7 @@ export default (name, options) => {
 		} catch (error) {
 			log.error(error);
 		}
+
 		return Object.assign({}, defaultSize, restoredState);
 	};
 
@@ -60,6 +61,7 @@ export default (name, options) => {
 		if (!visible) {
 			return resetToDefaults();
 		}
+
 		return windowState;
 	};
 
@@ -67,6 +69,7 @@ export default (name, options) => {
 		if (!win.isMinimized() && !win.isMaximized()) {
 			Object.assign(state, getCurrentPosition());
 		}
+
 		userDataDir.write(stateStoreFile, state, {
 			atomic: true
 		});
@@ -93,10 +96,12 @@ export default (name, options) => {
 				}
 			}
 		}
+
 		if (env.name === 'development') {
 			store.set('seenAlerts', {});
 			store.set('seenInvasions', {});
 		}
+
 		return false;
 	});
 

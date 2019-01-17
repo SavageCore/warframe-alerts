@@ -13,6 +13,7 @@ function resourceFromString(itemString) {
 	if (m) {
 		return m[1];
 	}
+
 	return '';
 }
 
@@ -27,16 +28,19 @@ export function items(items, itemString) {
 			if (itemType === 'blueprints') {
 				itemString = itemString.replace(' Blueprint', '');
 			}
+
 			if (items[itemType][itemString] === true) {
 				itemsCheck = true;
 				return itemsCheck;
 			}
+
 			if (items[itemType][resourceFromString(itemString)] === true) {
 				itemsCheck = true;
 				return itemsCheck;
 			}
 		}
 	}
+
 	return itemsCheck;
 }
 
@@ -52,8 +56,10 @@ export function customItems(items, itemString) {
 				}
 			}
 		}
+
 		return itemsCheck;
 	}
+
 	return itemsCheck;
 }
 
@@ -63,6 +69,7 @@ export function planets(planets, planet) {
 			return true;
 		}
 	}
+
 	return false;
 }
 
@@ -71,8 +78,10 @@ export function credits(configObj, credits) {
 		if (credits >= configObj) {
 			return true;
 		}
+
 		return false;
 	}
+
 	return false;
 }
 
@@ -81,8 +90,10 @@ export function endo(endo, alertObj) {
 		if (endoFromString(alertObj.itemString) >= endo) {
 			return true;
 		}
+
 		return false;
 	}
+
 	return false;
 }
 
@@ -91,6 +102,7 @@ export function helmets(helmets, alertObj) {
 		if (helmets) {
 			return true;
 		}
+
 		return false;
 	}
 }
@@ -100,6 +112,7 @@ export function traces(traces, alertObj) {
 		if (traces > 0 && tracesFromString(alertObj.itemString) >= traces) {
 			return true;
 		}
+
 		return false;
 	}
 }
@@ -109,6 +122,7 @@ export function kubrow(kubrowEgg, itemString) {
 		if (kubrowEgg) {
 			return true;
 		}
+
 		return false;
 	}
 }
@@ -118,6 +132,7 @@ export function weaponSkins(weaponSkin, alertObj) {
 		if (weaponSkin) {
 			return true;
 		}
+
 		return false;
 	}
 }
@@ -127,11 +142,13 @@ export function expiry(expiry) {
 	if (!expiry) {
 		return false;
 	}
+
 	const nowTs = ts.now() * 1000;
 	const expiryTs = ts.fromDate(expiry) * 1000;
 	if (nowTs <= expiryTs) {
 		return true;
 	}
+
 	return false;
 }
 
@@ -139,5 +156,6 @@ export function isGiftLotus(description) {
 	if (description === 'Gift From The Lotus') {
 		return true;
 	}
+
 	return false;
 }

@@ -73,6 +73,7 @@ const shouldQuit = app.makeSingleInstance(() => {
 		if (!mainWindow.isVisible()) {
 			mainWindow.show();
 		}
+
 		mainWindow.focus();
 	}
 });
@@ -119,11 +120,11 @@ app.on('ready', async () => {
 
 		const tray = new Tray(path.join(__dirname, '/icon.ico'));
 
-		mainWindow.webContents.on('did-finish-load', async () => { // eslint-disable-line require-await
+		mainWindow.webContents.on('did-finish-load', async () => {
 			updateLog(`Warframe Alerts v${app.getVersion()} Started`);
 			mainWindow.webContents.send('filter-data', store.get('filters'), defaultConfig.filters);
 			checkApi();
-			setInterval(async () => { // eslint-disable-line require-await
+			setInterval(async () => {
 				checkApi();
 			}, 60000);
 		});
@@ -193,7 +194,7 @@ app.on('ready', async () => {
 			});
 			tray.setToolTip(app.getName());
 			tray.setContextMenu(contextMenu);
-			ipcMain.on('update-filter', async (event, arg) => { // eslint-disable-line require-await
+			ipcMain.on('update-filter', async (event, arg) => {
 				store.set(`${arg.config}.${arg.item}`, arg.value);
 			});
 		}).catch(error => {
@@ -220,6 +221,7 @@ function updateCheck() {
 	if (typeof lastUpdateCheck !== 'undefined') {
 		diff = nowTs - lastUpdateCheck;
 	}
+
 	if (diff >= 86400000 || typeof lastUpdateCheck === 'undefined') {
 		autoUpdater.checkForUpdatesAndNotify().then(() => {
 			store.set('app.lastUpdateCheck', nowTs);
@@ -235,4 +237,5 @@ async function checkApi() {
 	await checkAlert(ws);
 	await checkInvasion(ws);
 }
+
 export default updateLog;
