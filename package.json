@@ -29,12 +29,6 @@
 		"failFast": true,
 		"require": "babel-core/register"
 	},
-	"babel": {
-		"babelrc": false,
-		"presets": [
-			"es2015"
-		]
-	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"build": "gulp build",
@@ -70,7 +64,7 @@
 		"warframe-worldstate-parser": "^2.1.28"
 	},
 	"devDependencies": {
-		"ava": "^0.25.0",
+		"ava": "^1.1.0",
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
 		"codecov": "^3.1.0",
