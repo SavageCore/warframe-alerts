@@ -28,13 +28,15 @@ gulp.task('less', () => {
 		.pipe(gulp.dest(destDir.path('stylesheets')));
 });
 
-gulp.task('environment', () => {
+gulp.task('environment', done => {
 	const configFile = `config/env_${utils.getEnvName()}.json`;
 	projectDir.copy(configFile, destDir.path('env.json'), {overwrite: true});
+	done();
 });
 
-gulp.task('icon', () => {
+gulp.task('icon', done => {
 	projectDir.copy(buildDir.path('icon.ico'), destDir.path('icon.ico'), {overwrite: true});
+	done();
 });
 
 gulp.task('watch', () => {
@@ -56,4 +58,4 @@ gulp.task('watch', () => {
 	}));
 });
 
-gulp.task('build', ['bundle', 'less', 'environment', 'icon']);
+gulp.task('build', gulp.series('bundle', 'less', 'environment', 'icon'));
