@@ -61,7 +61,7 @@
 		"spectron": "^5.0.0",
 		"ucfirst": "^1.0.0",
 		"unix-timestamp": "^0.2.0",
-		"warframe-worldstate-parser": "^2.1.29"
+		"warframe-worldstate-parser": "^2.1.30"
 	},
 	"devDependencies": {
 		"ava": "^1.2.1",
