@@ -51,7 +51,7 @@
 		"electron-store": "^2.0.0",
 		"electron-unhandled": "^2.1.0",
 		"electron-updater": "^4.0.6",
-		"fs-jetpack": "^2.2.1",
+		"fs-jetpack": "^2.2.2",
 		"got": "^9.6.0",
 		"is-online": "^8.1.0",
 		"make-dir": "^2.0.0",
