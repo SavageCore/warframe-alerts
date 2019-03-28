@@ -46,7 +46,7 @@
 		"@sindresorhus/is": "^0.15.0",
 		"auto-launch": "^5.0.5",
 		"electron-context-menu": "^0.11.0",
-		"electron-log": "^3.0.1",
+		"electron-log": "^3.0.4",
 		"electron-process-manager": "^0.7.0",
 		"electron-store": "^2.0.0",
 		"electron-unhandled": "^2.1.0",
