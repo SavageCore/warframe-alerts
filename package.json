@@ -78,7 +78,7 @@
 		"gulp-util": "^3.0.8",
 		"gulp-watch": "^5.0.1",
 		"nyc": "^13.3.0",
-		"rollup": "^0.68.2",
+		"rollup": "^1.9.3",
 		"source-map-support": "^0.5.11",
 		"stylelint": "^9.10.1",
 		"stylelint-config-standard": "^18.2.0",
