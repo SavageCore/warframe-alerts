@@ -80,7 +80,7 @@
 		"nyc": "^13.3.0",
 		"rollup": "^0.68.2",
 		"source-map-support": "^0.5.12",
-		"stylelint": "^9.10.1",
+		"stylelint": "^10.1.0",
 		"stylelint-config-standard": "^18.3.0",
 		"xo": "^0.24.0"
 	}
